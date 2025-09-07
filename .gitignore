@@ -1,0 +1,11 @@
+# Ignire .env & .json
+.env
+*.json
+
+# other maven leftovers
+target
+test
+
+# logback
+logback.xml
+logs
