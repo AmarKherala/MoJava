@@ -5,6 +5,7 @@
 # other maven leftovers
 target
 test
+.LCKpom.xml~
 
 # logback
 logback.xml

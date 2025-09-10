@@ -8,7 +8,6 @@ import net.amar.mojo.handler.RequestsHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.ForumChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
 import net.dv8tion.jda.api.events.channel.ChannelCreateEvent;
@@ -55,48 +54,53 @@ public class ThreadCreated extends ListenerAdapter {
         }
     }
 
-    @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
-        if (event.getAuthor().isBot())
-            return;
+   @Override
+public void onMessageReceived(MessageReceivedEvent event) {
+    if (event.getAuthor().isBot())
+        return;
 
-        if (event.getChannelType().isThread()) {
-            ThreadChannel Thread = event.getChannel().asThreadChannel();
-            if (Thread.getParentChannel() instanceof ForumChannel forum
-                    && forum.getId().equals(LoadData.forumChannelId())) {
-                handleLogMessage(event.getMessage());
+    if (event.getChannelType().isThread()) {
+        ThreadChannel thread = event.getChannel().asThreadChannel();
+        if (thread.getParentChannel() instanceof ForumChannel forum
+                && forum.getId().equals(LoadData.forumChannelId())) {
+            
+            handleLogMessage(event.getMessage());
 
-                try {
-                    for (Member m : event.getMessage().getMentions().getMembers()) {
+            // Async member fetch for the author
+            event.getGuild().retrieveMember(event.getAuthor()).queue(userW -> {
+                boolean isUserStaff = userW.getRoles().stream()
+                        .anyMatch(role -> role.getId().equals(mod) || role.getId().equals(admin));
 
-                        if (event.getMessage().getReferencedMessage() != null &&
-                                m.getId().equals(event.getMessage().getReferencedMessage().getAuthor().getId())) {
-                            continue;
-                        }
+                if (isUserStaff)
+                    return; // staff can ping freely
 
-                        User userWhoPinged = event.getAuthor();
-                        Member userW = event.getGuild().getMember(userWhoPinged);
-                        boolean isUserStaff = userW.getRoles().stream()
-                                .anyMatch(role -> role.getId().equals(mod) || role.getId().equals(admin));
-
-                        if (isUserStaff)
-                            break;
-
-                        boolean isStaff = m.getRoles().stream()
-                                .anyMatch(role -> role.getId().equals(admin) || role.getId().equals(mod));
-                        if (isStaff) {
-                            event.getMessage().reply(
-                                    "Please don't ping any staffs for help.\nBe patient, someone will help you when they can!\n\n**If you continue doing it you WILL get punished.**\n**Note that we are NOT paid team!**")
-                                    .queue();
-                            break;
-                        }
+                for (Member m : event.getMessage().getMentions().getMembers()) {
+                    if (event.getMessage().getReferencedMessage() != null &&
+                            m.getId().equals(event.getMessage().getReferencedMessage().getAuthor().getId())) {
+                        continue; // don’t warn if it’s a reply
                     }
-                } catch (Exception e) {
-                    AmarLogger.error("Something erong...", e);
+
+                    boolean isStaff = m.getRoles().stream()
+                            .anyMatch(role -> role.getId().equals(admin) || role.getId().equals(mod));
+                    if (isStaff) {
+                        event.getMessage().reply(
+                                "Please don't ping any staffs for help.\n" +
+                                "Be patient, someone will help you when they can!\n\n" +
+                                "**If you continue doing it you WILL get punished.**\n" +
+                                "**Note that we are NOT paid team!**"
+                        ).queue();
+                        break;
+                    }
                 }
-            }
+            }, failure -> {
+                AmarLogger.error("Failed to retrieve member for user " 
+                        + event.getAuthor().getId() 
+                        + " in guild " + event.getGuild().getId(), failure);
+            });
         }
     }
+}
+
 
     private void handleLogMessage(Message message) {
 
