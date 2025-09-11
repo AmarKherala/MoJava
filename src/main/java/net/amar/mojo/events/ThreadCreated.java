@@ -44,7 +44,7 @@ public class ThreadCreated extends ListenerAdapter {
                     EmbedBuilder noLog = new EmbedBuilder();
                     noLog.setTitle("NO LOG!");
                     noLog.setDescription(
-                            "You didn't provide a log file, to get help please read [this](https://discord.com/channels/1365346109131722753/1390045622924738651/1390045622924738651).\nYou can ignore the message if the log wasn't attached intentionally or if you're using a random file name generator plugin.\n-# click on the blue text");
+                            "You didn't provide a log file, to get help please read [this](https://discord.com/channels/1365346109131722753/1390045622924738651/1390045622924738651).\nYou can ignore the message if the log wasn't attached intentionally or if you're using a random file name generator plugin.\n### Note that we won't help you with anything else other than a problem in the functionality of Mojo.\n-# click on the blue text");
                     noLog.setColor(Color.RED);
                     starter.replyEmbeds(noLog.build()).queue();
                     return;
@@ -66,7 +66,7 @@ public void onMessageReceived(MessageReceivedEvent event) {
             
             handleLogMessage(event.getMessage());
 
-            // Async member fetch for the author
+            
             event.getGuild().retrieveMember(event.getAuthor()).queue(userW -> {
                 boolean isUserStaff = userW.getRoles().stream()
                         .anyMatch(role -> role.getId().equals(mod) || role.getId().equals(admin));
@@ -83,12 +83,12 @@ public void onMessageReceived(MessageReceivedEvent event) {
                     boolean isStaff = m.getRoles().stream()
                             .anyMatch(role -> role.getId().equals(admin) || role.getId().equals(mod));
                     if (isStaff) {
-                        event.getMessage().reply(
-                                "Please don't ping any staffs for help.\n" +
-                                "Be patient, someone will help you when they can!\n\n" +
-                                "**If you continue doing it you WILL get punished.**\n" +
-                                "**Note that we are NOT paid team!**"
-                        ).queue();
+                        event.getMessage().reply("""
+                                                 Please don't ping any staffs for help.
+                                                 Be patient, someone will help you when they can!
+                                                 
+                                                 **If you continue doing it you WILL get punished.**
+                                                 **Note that we are NOT paid team!**""").queue();
                         break;
                     }
                 }
@@ -198,7 +198,7 @@ public void onMessageReceived(MessageReceivedEvent event) {
     public EmbedBuilder failedLogParser() {
         EmbedBuilder notMojo = new EmbedBuilder();
         notMojo.setTitle("Invalid Log");
-        notMojo.setDescription("The log you provided Is NOT a Mojo log");
+        notMojo.setDescription("The log you provided Is NOT a Mojo log\n### Note that we don't provide support for other launchers/forks of mojo.");
         notMojo.setColor(Color.RED);
         return notMojo;
     }
