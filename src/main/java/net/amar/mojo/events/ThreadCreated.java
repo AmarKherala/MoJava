@@ -50,6 +50,7 @@ public class ThreadCreated extends ListenerAdapter {
                     return;
                 }
                 handleLogMessage(starter);
+                return;
             });
         }
     }
@@ -169,16 +170,19 @@ public void onMessageReceived(MessageReceivedEvent event) {
                                 "Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo.debug/runtimes/".length())
                         .trim();
             }
+            break;
         }
+
         if (launcherVersion.isBlank() && deviceModel.isBlank()) {
            message.replyEmbeds(noInfo().build()).queue();
-            
-        } else {
+            return;
+        } 
         message.replyEmbeds(
                 successfulLoadParser(launcherVersion, deviceModel, graphicsDevice, mojoRenderer, minecraftVersion,
                         javaVersion)
                         .build())
-                .queue(); }
+                .queue(); 
+                return;
     }
 
     public EmbedBuilder successfulLoadParser(String launcherVersion, String deviceModel, String graphicsDevice,
