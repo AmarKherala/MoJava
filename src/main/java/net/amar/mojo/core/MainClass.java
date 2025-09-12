@@ -2,11 +2,12 @@ package net.amar.mojo.core;
 
 import java.util.EnumSet;
 
-import net.amar.mojo.events.ThreadCreated;
+import net.amar.mojo.events.MemberPubished;
+import net.amar.mojo.events.SupportPosts;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.Commands;
+// import net.dv8tion.jda.api.interactions.commands.OptionType;
+// import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
@@ -27,22 +28,13 @@ public class MainClass {
         .setMemberCachePolicy(MemberCachePolicy.ALL)
         .enableIntents(EnumSet.allOf(GatewayIntent.class))
         .addEventListeners(
-         new ThreadCreated()
+         new SupportPosts(),
+         new MemberPubished()
         )
         .build();
         } catch (Exception e){
             AmarLogger.error("Something went wrong at start-up, procces killed.",e);
         }
         jda.awaitReady();
-    }
-
-    public void commands(){
-      jda.updateCommands()
-      .addCommands(
-        Commands.slash("mute","mute a bad guy")
-        .addOption(OptionType.USER, "user", "who to mute")
-        .addOption(OptionType.NUMBER, "duration", "for how long should they stay muted")
-        .addOption(OptionType.STRING, "reason", "why mute this guy")
-      );
     }
 }

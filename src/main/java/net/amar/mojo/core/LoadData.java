@@ -24,4 +24,8 @@ public class LoadData {
     public static String adminRoleId(){
         return load.get("ADMIN_ROLE_ID");
     }
+
+    public static String supportBanned(){
+        return load.get("SUP_BANNED_ROLE_ID");
+    }
 }
