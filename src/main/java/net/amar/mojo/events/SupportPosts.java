@@ -65,7 +65,7 @@ public class SupportPosts extends ListenerAdapter {
         for (String line : lines) {
             line = line.trim();
 
-            if (line.contains("vulkanmod")) {
+            if (line.contains("vulkanmod") || line.contains("wurst")) {
                 String inComMod = line;
                 noSupport = true;
                 message.replyEmbeds((incMod(inComMod).build())).queue();
