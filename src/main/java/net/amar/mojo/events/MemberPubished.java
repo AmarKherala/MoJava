@@ -130,7 +130,7 @@ public class MemberPubished extends ListenerAdapter {
         });
   }
 
-  // member timeouts -
+  // member timeouts
   @Override
   @SuppressWarnings("null")
   public void onGuildMemberUpdateTimeOut(GuildMemberUpdateTimeOutEvent event) {
@@ -144,16 +144,19 @@ public class MemberPubished extends ListenerAdapter {
     OffsetDateTime now = OffsetDateTime.now();
     if (until.isAfter(now)) {
       Duration dur = Duration.between(now.toInstant(), until.toInstant());
-      long totalHours = dur.toHours();
+      long totalMinutes = dur.toMinutes();
 
       String formattedDuration;
-      if (totalHours >= 24) {
-        long days = totalHours / 24;
-        formattedDuration = days + "d ";
+      if (totalMinutes >= 1440) {
+        long days = totalMinutes / 1440;
+        formattedDuration = days + "d";
+      } else if (totalMinutes >= 60) {
+        long hours = totalMinutes / 60;
+        formattedDuration = hours + "h";
       } else {
-        long hours = totalHours;
-        formattedDuration = hours + "h ";
+        formattedDuration = totalMinutes + "m";
       }
+      AmarLogger.info("Time for timeout to end :"+formattedDuration);
       mojoGuild.retrieveAuditLogs()
           .type(ActionType.MEMBER_UPDATE)
           .limit(1)
