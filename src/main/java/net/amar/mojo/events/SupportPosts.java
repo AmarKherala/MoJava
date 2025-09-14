@@ -79,6 +79,10 @@ public class SupportPosts extends ListenerAdapter {
             }
          }
 
+        /*
+         just to be safe, break if bad mods are detected
+         i dont want to loop through useless information
+         */
         if (noSupport) break;
 
             if (line.startsWith("Info: Launcher version:")) {
