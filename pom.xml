@@ -27,9 +27,9 @@
 
         <!--LOADING DATA-->
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            
+            <groupId>net.amar</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
 

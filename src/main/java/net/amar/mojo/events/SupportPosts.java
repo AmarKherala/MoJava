@@ -2,6 +2,8 @@ package net.amar.mojo.events;
 
 import java.awt.Color;
 
+import org.json.JSONArray;
+
 import net.amar.mojo.core.AmarLogger;
 import net.amar.mojo.core.LoadData;
 import net.amar.mojo.handler.RequestsHandler;
@@ -16,6 +18,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class SupportPosts extends ListenerAdapter {
 
+    static JSONArray badMods = LoadData.badMods();
     static String mod = LoadData.modRoleId();
     static String admin = LoadData.adminRoleId();
     static String helper = LoadData.helperRoleId();
@@ -28,8 +31,7 @@ public class SupportPosts extends ListenerAdapter {
     static String javaVersion = "";
     static String arch = "";
     static String error ="";
-    static boolean noSupport;
-
+    static boolean noSupport = false;
     @SuppressWarnings({ "RedundantStringToString", "UnnecessaryReturnStatement" })
     private void handleLogMessage(Message message) {
 
@@ -64,28 +66,20 @@ public class SupportPosts extends ListenerAdapter {
         javaVersion = "";
         arch = "";
         error ="";
-
+    
         for (String line : lines) {
             line = line.trim();
 
-            if (line.contains("vulkanmod") || line.contains("wurst") || line.contains("meteor-client")) {
-                String inComMod = line;
-                noSupport = true;
-                message.replyEmbeds((incMod(inComMod).build())).queue();
-                break;
+         for(Object o:badMods){
+            String inComMod = o.toString();
+            if (line.contains(inComMod)){
+                 noSupport = true;
+                 message.replyEmbeds((incMod(inComMod).build())).queue();
+                 break;
             }
+         }
 
-            /*
-             * Error detecting code, improve later
-             *  - amarDev();
-             */
-
-            // if (line.contains("Exception")){
-            //    error = line;
-            //    noSupport = true;
-            //    message.replyEmbeds(errorDetect(error).build()).queue();
-            //    break;
-            // }
+        if (noSupport) break;
 
             if (line.startsWith("Info: Launcher version:")) {
                 launcherVersion = line.substring("Info: Launcher version:".length()).trim();
@@ -294,3 +288,15 @@ public class SupportPosts extends ListenerAdapter {
         return err;
     }
 }
+
+             /*
+             * Error detecting code, improve later
+             *  - amarDev();
+             */
+
+            // if (line.contains("Exception")){
+            //    error = line;
+            //    noSupport = true;
+            //    message.replyEmbeds(errorDetect(error).build()).queue();
+            //    break;
+            // }
