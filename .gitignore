@@ -6,6 +6,7 @@
 target
 test
 .LCKpom.xml~
+dependency-reduced-pom.xml
 
 # logback
 logback.xml
