@@ -1,6 +1,6 @@
 /*
- * This class is only meant to detect support banned/banned
- * members and try to dm them the appeal link.
+ * This class reads the Audit log to detect punishments
+ * via carl-bot and send them to #verdict
  *  - amarDev();
  */
 package net.amar.mojo.events;
@@ -146,17 +146,39 @@ public class MemberPubished extends ListenerAdapter {
       Duration dur = Duration.between(now.toInstant(), until.toInstant());
       long totalMinutes = dur.toMinutes();
 
+
+      /*
+       * Time formating code, marked so i can
+       * easily come back to it later when something
+       * is going south..  - amarDev(); 
+       */
+
       String formattedDuration;
-      if (totalMinutes >= 1440) {
+      if (totalMinutes >= 1440) { // days
         long days = totalMinutes / 1440;
-        formattedDuration = days + "d";
-      } else if (totalMinutes >= 60) {
+        long hours = (totalMinutes % 1440) / 60;
+
+        if (hours == 0) {
+          formattedDuration = days + "d";
+        } else {
+          formattedDuration = days + "d " + hours + "h";
+        }
+      } else if (totalMinutes >= 60) { // hours
         long hours = totalMinutes / 60;
-        formattedDuration = hours + "h";
-      } else {
+        long minutes = totalMinutes % 60;
+
+        if (minutes == 0) {
+          formattedDuration = hours + "h";
+        } else {
+          formattedDuration = hours + "h " + minutes + "m";
+        }
+      } else { // minutes
         formattedDuration = totalMinutes + "m";
       }
-      AmarLogger.info("Time for timeout to end :"+formattedDuration);
+
+//******* time formatting code ends here ***********
+
+      AmarLogger.info("Time for timeout to end :" + formattedDuration);
       mojoGuild.retrieveAuditLogs()
           .type(ActionType.MEMBER_UPDATE)
           .limit(1)

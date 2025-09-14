@@ -28,4 +28,8 @@ public class LoadData {
     public static String supportBanned(){
         return load.get("SUP_BANNED_ROLE_ID");
     }
+
+    public static String helperRoleId(){
+        return load.get("HELPER_ROLE_ID");
+    }
 }

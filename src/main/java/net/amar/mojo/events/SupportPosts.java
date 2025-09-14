@@ -18,6 +18,7 @@ public class SupportPosts extends ListenerAdapter {
 
     static String mod = LoadData.modRoleId();
     static String admin = LoadData.adminRoleId();
+    static String helper = LoadData.helperRoleId();
 
     static String launcherVersion = "";
     static String deviceModel = "";
@@ -26,6 +27,7 @@ public class SupportPosts extends ListenerAdapter {
     static String minecraftVersion = "";
     static String javaVersion = "";
     static String arch = "";
+    static String error ="";
     static boolean noSupport;
 
     @SuppressWarnings({ "RedundantStringToString", "UnnecessaryReturnStatement" })
@@ -61,16 +63,30 @@ public class SupportPosts extends ListenerAdapter {
         minecraftVersion = "";
         javaVersion = "";
         arch = "";
+        error ="";
 
         for (String line : lines) {
             line = line.trim();
 
-            if (line.contains("vulkanmod") || line.contains("wurst")) {
+            if (line.contains("vulkanmod") || line.contains("wurst") || line.contains("meteor-client")) {
                 String inComMod = line;
                 noSupport = true;
                 message.replyEmbeds((incMod(inComMod).build())).queue();
                 break;
             }
+
+            /*
+             * Error detecting code, improve later
+             *  - amarDev();
+             */
+
+            // if (line.contains("Exception")){
+            //    error = line;
+            //    noSupport = true;
+            //    message.replyEmbeds(errorDetect(error).build()).queue();
+            //    break;
+            // }
+
             if (line.startsWith("Info: Launcher version:")) {
                 launcherVersion = line.substring("Info: Launcher version:".length()).trim();
 
@@ -117,6 +133,12 @@ public class SupportPosts extends ListenerAdapter {
         }
         if (noSupport) {
             noSupport = false;
+            ThreadChannel close = message.getChannel().asThreadChannel();
+            close.sendMessage("### Please read [this list](https://discord.com/channels/1365346109131722753/1390337369751949394) before you open a new support post.\n- Locking thread... 🔒").queue();
+            close.getManager().setLocked(true).queue(
+                success -> AmarLogger.info("Thread " + close +" closed due to detecting unsupported mods"),
+                failure -> AmarLogger.warn("Failed to close thread " + close)
+            );
             return;
         } else {
             message.replyEmbeds(
@@ -174,7 +196,7 @@ public class SupportPosts extends ListenerAdapter {
 
                 event.getGuild().retrieveMember(event.getAuthor()).queue(userW -> {
                     boolean isUserStaff = userW.getRoles().stream()
-                            .anyMatch(role -> role.getId().equals(mod) || role.getId().equals(admin));
+                            .anyMatch(role -> role.getId().equals(mod) || role.getId().equals(admin) || role.getId().equals(helper));
 
                     if (isUserStaff)
                         return; // staff can ping freely
@@ -186,7 +208,7 @@ public class SupportPosts extends ListenerAdapter {
                         }
 
                         boolean isStaff = m.getRoles().stream()
-                                .anyMatch(role -> role.getId().equals(admin) || role.getId().equals(mod));
+                                .anyMatch(role -> role.getId().equals(admin) || role.getId().equals(mod) || role.getId().equals(helper));
                         if (isStaff) {
                             event.getMessage().reply("""
                                     Please don't ping any staffs for help.
@@ -262,5 +284,13 @@ public class SupportPosts extends ListenerAdapter {
         s.setDescription("Its recommended that you use LTW while running sodium to not run into issues/crahses.");
         s.setColor(Color.RED);
         return s;
+    }
+
+    public EmbedBuilder errorDetect(String error){
+        EmbedBuilder err = new EmbedBuilder();
+        err.setTitle("Error found in log!");
+        err.setDescription(error);
+        err.setColor(Color.RED);
+        return err;
     }
 }
