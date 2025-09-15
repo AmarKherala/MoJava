@@ -23,15 +23,6 @@ public class SupportPosts extends ListenerAdapter {
     static String admin = LoadData.adminRoleId();
     static String helper = LoadData.helperRoleId();
 
-    static String launcherVersion = "";
-    static String deviceModel = "";
-    static String mojoRenderer = "";
-    static String graphicsDevice = "";
-    static String minecraftVersion = "";
-    static String javaVersion = "";
-    static String arch = "";
-    static String error ="";
-    static boolean noSupport = false;
     @SuppressWarnings({ "RedundantStringToString", "UnnecessaryReturnStatement" })
     private void handleLogMessage(Message message) {
 
@@ -58,14 +49,14 @@ public class SupportPosts extends ListenerAdapter {
             return;
         }
 
-        launcherVersion = "";
-        deviceModel = "";
-        mojoRenderer = "";
-        graphicsDevice = "";
-        minecraftVersion = "";
-        javaVersion = "";
-        arch = "";
-        error ="";
+        String launcherVersion = "";
+        String deviceModel = "";
+        String mojoRenderer = "";
+        String graphicsDevice = "";
+        String minecraftVersion = "";
+        String javaVersion = "";
+        String arch = "";
+        boolean noSupport = false;
     
         for (String line : lines) {
             line = line.trim();
