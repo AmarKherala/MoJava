@@ -29,8 +29,13 @@ public class LoadData {
     /*
      * All of the .env sections ^-^
      */
+
     public static String BotToken() {
         return load.get("BOT_TOKEN");
+    }
+
+    public static String prefix(){
+        return load.get("PREFIX");
     }
 
     public static String forumChannelId() {
@@ -39,6 +44,10 @@ public class LoadData {
 
     public static String verdictChannel() {
         return load.get("VERDICT_CANNEL_ID");
+    }
+
+    public static String logChannel(){
+        return load.get("LOG_CHANNEL_ID");
     }
 
     public static String modRoleId() {

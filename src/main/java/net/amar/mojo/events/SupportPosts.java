@@ -1,6 +1,7 @@
 package net.amar.mojo.events;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 import org.json.JSONArray;
 
@@ -116,12 +117,12 @@ public class SupportPosts extends ListenerAdapter {
             message.replyEmbeds(noInfo().build()).queue();
             return;
         }
-        if (logContent.toString().contains("sodium") && mojoRenderer.equals("opengles2")) {
+                String[] mcVers = {"1.17","1.18","1.19","1.20","1.21"};
+        if (logContent.toString().contains("sodium") && mojoRenderer.equals("opengles2") && Arrays.asList(mcVers).contains(minecraftVersion)) {
             message.replyEmbeds(soudimGles().build()).queue();
             return;
         }
         if (noSupport) {
-            noSupport = false;
             ThreadChannel close = message.getChannel().asThreadChannel();
             close.sendMessage("### Please read [this list](https://discord.com/channels/1365346109131722753/1390337369751949394) before you open a new support post.\n- Locking thread... 🔒").queue();
             close.getManager().setLocked(true).queue(
