@@ -13,6 +13,7 @@ import net.amar.mojo.commands.CmdInterface;
 import net.amar.mojo.core.AmarLogger;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
+@SuppressWarnings("null")
 public class BanMod implements CmdInterface {
 
     @Override

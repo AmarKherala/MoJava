@@ -1,6 +1,5 @@
 package net.amar.mojo.commands.mods;
 
-// import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,6 +12,7 @@ import net.amar.mojo.commands.CmdInterface;
 import net.amar.mojo.core.AmarLogger;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
+@SuppressWarnings("null")
 public class UnBanMod implements CmdInterface {
 
     @Override
@@ -25,35 +25,34 @@ public class UnBanMod implements CmdInterface {
         return "remove a mod from ban list";
     }
 
-  @Override
-public void executeSlash(SlashCommandInteractionEvent event) {
-    String path = "src/main/resources/badMods.json";
-    String toRemove = event.getOption("mod-id").getAsString();
-    try {
-        String jsonContent = Files.readString(Paths.get(path));
-        JSONObject mainObj = new JSONObject(jsonContent);
-        JSONArray bannedMods = mainObj.getJSONArray("not_supported_mods");
+    @Override
+    public void executeSlash(SlashCommandInteractionEvent event) {
+        String path = "src/main/resources/badMods.json";
+        String toRemove = event.getOption("mod-id").getAsString();
+        try {
+            String jsonContent = Files.readString(Paths.get(path));
+            JSONObject mainObj = new JSONObject(jsonContent);
+            JSONArray bannedMods = mainObj.getJSONArray("not_supported_mods");
 
-        boolean removed = false;
+            boolean removed = false;
 
-        for (int i=0;i<bannedMods.length();i++) {
-            if (bannedMods.getString(i).equals(toRemove)) {
-                bannedMods.remove(i);
-                removed = true;
-                break; 
+            for (int i = 0; i < bannedMods.length(); i++) {
+                if (bannedMods.getString(i).equals(toRemove)) {
+                    bannedMods.remove(i);
+                    removed = true;
+                    break;
+                }
             }
-        }
 
-        if (removed) {
-            Files.writeString(Paths.get(path), mainObj.toString());
-            event.replyFormat("Successfully deleted Mod [%s] from ban list", toRemove).queue();
-        } else {
-            event.replyFormat("Couldn't find Mod [%s] on the ban list", toRemove).queue();
-        }
+            if (removed) {
+                Files.writeString(Paths.get(path), mainObj.toString());
+                event.replyFormat("Successfully deleted Mod [%s] from ban list", toRemove).queue();
+            } else {
+                event.replyFormat("Couldn't find Mod [%s] on the ban list", toRemove).queue();
+            }
 
-    } catch (IOException | JSONException e) {
-        AmarLogger.error("Error deleting mod from ban list", e);
+        } catch (IOException | JSONException e) {
+            AmarLogger.error("Error deleting mod from ban list", e);
+        }
     }
-}
-
 }
