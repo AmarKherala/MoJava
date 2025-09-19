@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import net.amar.mojo.events.ExecCmd;
 import net.amar.mojo.events.MemberPubished;
 import net.amar.mojo.events.SupportPosts;
+import net.amar.mojo.txtcommands.TxtHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.Permission;
@@ -36,7 +37,8 @@ public class MainClass {
                     .addEventListeners(
                             new SupportPosts(),
                             new MemberPubished(),
-                            new ExecCmd()
+                            new ExecCmd(),
+                            new TxtHandler()
                             )
                     .build();
         } catch (Exception e) {
@@ -57,7 +59,9 @@ public class MainClass {
                     .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MODERATE_MEMBERS)),
                                     
                     Commands.slash("mod-list", "banned mods list")
-                            .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MODERATE_MEMBERS)))
+                            .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MODERATE_MEMBERS)),
+
+                    Commands.slash("modping","only use when necessary"))
                     .queue(
                             success -> AmarLogger.info("successfully added mojo server commands"),
                             failure -> AmarLogger.warn("couldn't add mojo server commands"));
@@ -70,7 +74,8 @@ public class MainClass {
     static void addCommands() {
         jda.updateCommands()
                 .addCommands(
-                        Commands.slash("info", "information about the bot"))
+                        Commands.slash("info", "information about the bot"),
+                        Commands.slash("info-host","informatiob about the host"))
                 .queue(
                         success -> AmarLogger.info("successfully added commands"),
                         failure -> AmarLogger.warn("couldnt add commands"));

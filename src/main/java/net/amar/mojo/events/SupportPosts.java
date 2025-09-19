@@ -1,7 +1,6 @@
 package net.amar.mojo.events;
 
 import java.awt.Color;
-import java.util.Arrays;
 
 import org.json.JSONArray;
 
@@ -20,9 +19,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class SupportPosts extends ListenerAdapter {
 
     static JSONArray badMods = LoadData.badMods();
-    static String mod = LoadData.modRoleId();
-    static String admin = LoadData.adminRoleId();
-    static String helper = LoadData.helperRoleId();
+    static JSONArray staff = LoadData.staff();
+    static String contirbuter = LoadData.contRoleId();
 
     @SuppressWarnings({ "RedundantStringToString", "UnnecessaryReturnStatement" })
     private void handleLogMessage(Message message) {
@@ -58,24 +56,25 @@ public class SupportPosts extends ListenerAdapter {
         String javaVersion = "";
         String arch = "";
         boolean noSupport = false;
-    
+
         for (String line : lines) {
             line = line.trim();
 
-         for(Object o:badMods){
-            String inComMod = o.toString();
-            if (line.contains(inComMod)){
-                 noSupport = true;
-                 message.replyEmbeds((incMod(inComMod).build())).queue();
-                 break;
+            for (Object o : badMods) {
+                String inComMod = o.toString();
+                if (line.contains(inComMod)) {
+                    noSupport = true;
+                    message.replyEmbeds((incMod(inComMod).build())).queue();
+                    break;
+                }
             }
-         }
 
-        /*
-         just to be safe, break if bad mods are detected
-         i dont want to loop through useless information
-         */
-        if (noSupport) break;
+            /*
+             * just to be safe, break if bad mods are detected
+             * i dont want to loop through useless information
+             */
+            if (noSupport)
+                break;
 
             if (line.startsWith("Info: Launcher version:")) {
                 launcherVersion = line.substring("Info: Launcher version:".length()).trim();
@@ -117,18 +116,26 @@ public class SupportPosts extends ListenerAdapter {
             message.replyEmbeds(noInfo().build()).queue();
             return;
         }
-                String[] mcVers = {"1.17","1.18","1.19","1.20","1.21"};
-        if (logContent.toString().contains("sodium") && mojoRenderer.equals("opengles2") && Arrays.asList(mcVers).contains(minecraftVersion)) {
+        String[] mcVers = { "1.17", "1.18", "1.19", "1.20", "1.21" };
+        boolean sevenplus = false;
+        for (String g : mcVers) {
+            if (minecraftVersion.contains(g)) {
+                sevenplus = true;
+                break;
+            }
+        }
+        if (logContent.toString().contains("sodium") && mojoRenderer.equals("opengles2") && sevenplus) {
             message.replyEmbeds(soudimGles().build()).queue();
             return;
         }
         if (noSupport) {
             ThreadChannel close = message.getChannel().asThreadChannel();
-            close.sendMessage("### Please read [this list](https://discord.com/channels/1365346109131722753/1390337369751949394) before you open a new support post.\n- Locking thread... 🔒").queue();
+            close.sendMessage(
+                    "### Please read [this list](https://discord.com/channels/1365346109131722753/1390337369751949394) before you open a new support post.\n- Locking thread... 🔒")
+                    .queue();
             close.getManager().setLocked(true).queue(
-                success -> AmarLogger.info("Thread " + close +" closed due to detecting unsupported mods"),
-                failure -> AmarLogger.warn("Failed to close thread " + close)
-            );
+                    success -> AmarLogger.info("Thread " + close + " closed due to detecting unsupported mods"),
+                    failure -> AmarLogger.warn("Failed to close thread " + close));
             return;
         } else {
             message.replyEmbeds(
@@ -170,7 +177,7 @@ public class SupportPosts extends ListenerAdapter {
     }
 
     @Override
-    @SuppressWarnings("null")
+    @SuppressWarnings({ "null", "unlikely-arg-type", "unused" })
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor().isBot())
             return;
@@ -185,8 +192,14 @@ public class SupportPosts extends ListenerAdapter {
                 handleLogMessage(event.getMessage());
 
                 event.getGuild().retrieveMember(event.getAuthor()).queue(userW -> {
-                    boolean isUserStaff = userW.getRoles().stream()
-                            .anyMatch(role -> role.getId().equals(mod) || role.getId().equals(admin) || role.getId().equals(helper));
+                    boolean isUserStaff = userW.getRoles().stream().anyMatch(role -> {
+                        for (int i = 0; i < staff.length(); i++) {
+                            if (role.getId().equals(staff.getString(i))) {
+                                return true;
+                            }
+                        }
+                        return role.getId().equals(contirbuter);
+                    });
 
                     if (isUserStaff)
                         return; // staff can ping freely
@@ -198,7 +211,15 @@ public class SupportPosts extends ListenerAdapter {
                         }
 
                         boolean isStaff = m.getRoles().stream()
-                                .anyMatch(role -> role.getId().equals(admin) || role.getId().equals(mod) || role.getId().equals(helper));
+                                .anyMatch(role -> {
+                                    for (int i = 0; i < staff.length(); i++) {
+                                        if (role.getId().equals(staff.getString(i))) {
+                                            return true;
+                                        }
+                                    }
+                                    return false;
+                                });
+
                         if (isStaff) {
                             event.getMessage().reply("""
                                     Please don't ping any staffs for help.
@@ -223,13 +244,14 @@ public class SupportPosts extends ListenerAdapter {
             String mojoRenderer, String minecraftVersion, String javaVersion, String arch) {
         EmbedBuilder em = new EmbedBuilder();
         em.setTitle("Log Information");
-        em.setDescription("### Mojo version:\n" + launcherVersion +
-                "\n### Device model:\n" + deviceModel +
-                "\n### GPU:\n" + graphicsDevice +
-                "\n### Mojo Renderer:\n" + mojoRenderer +
-                "\n### Minecraft version:\n" + minecraftVersion +
-                "\n### Java runtime version:\n" + javaVersion +
-                "\n### Device Architecture : \n" + arch);
+        em.setDescription("**Mojo version**:\n" + launcherVersion +
+                "\n**Device model**:\n" + deviceModel +
+                "\n**GPU**:\n" + graphicsDevice +
+                "\n**Device Architecture**: \n" + arch +
+                "\n**Mojo Renderer**:\n" + mojoRenderer +
+                "\n**Minecraft version**:\n" + minecraftVersion +
+                "\n**Java runtime version**:\n" + javaVersion);
+
         em.setColor(Color.GREEN);
         return em;
     }
@@ -238,7 +260,7 @@ public class SupportPosts extends ListenerAdapter {
         EmbedBuilder notMojo = new EmbedBuilder();
         notMojo.setTitle("Invalid Log");
         notMojo.setDescription(
-                "The log you provided Is NOT a Mojo log\n### Note that we don't provide support for other launchers/forks of mojo.");
+                "The log you provided Is NOT a Mojo log\n**Note that we don't provide support for other launchers/forks of mojo.**");
         notMojo.setColor(Color.RED);
         return notMojo;
     }
@@ -257,7 +279,7 @@ public class SupportPosts extends ListenerAdapter {
         if (inComMod.contains("vulkan")) {
             inc.setTitle("Vulkanmod detected");
             inc.setDescription(
-                    "## We will not help you further due to using unsupported mods.\n### Please don't go to Vulkan's discord server and don't ask for support since it's clearly an fault of phones not vulkan mod itself!");
+                    "**We will not help you further due to using unsupported mods**.\n**Please don't go to Vulkan's discord server and don't ask for support since it's clearly a fault of phones not vulkan mod itself!**");
             inc.setColor(Color.RED);
             return inc;
         } else {
@@ -271,12 +293,13 @@ public class SupportPosts extends ListenerAdapter {
     public EmbedBuilder soudimGles() {
         EmbedBuilder s = new EmbedBuilder();
         s.setTitle("Sodium with GL4ES!");
-        s.setDescription("Its recommended that you use LTW while running sodium to not run into issues/crahses.");
+        s.setDescription(
+                "Its recommended that you use LTW while running sodium on 1.17+ to not run into issues/crashes.");
         s.setColor(Color.RED);
         return s;
     }
 
-    public EmbedBuilder errorDetect(String error){
+    public EmbedBuilder errorDetect(String error) {
         EmbedBuilder err = new EmbedBuilder();
         err.setTitle("Error found in log!");
         err.setDescription(error);
@@ -285,14 +308,14 @@ public class SupportPosts extends ListenerAdapter {
     }
 }
 
-             /*
-             * Error detecting code, improve later
-             *  - amarDev();
-             */
+/*
+ * Error detecting code, improve later
+ * - amarDev();
+ */
 
-            // if (line.contains("Exception")){
-            //    error = line;
-            //    noSupport = true;
-            //    message.replyEmbeds(errorDetect(error).build()).queue();
-            //    break;
-            // }
+// if (line.contains("Exception")){
+// error = line;
+// noSupport = true;
+// message.replyEmbeds(errorDetect(error).build()).queue();
+// break;
+// }

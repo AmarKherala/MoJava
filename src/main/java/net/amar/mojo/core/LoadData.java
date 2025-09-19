@@ -18,7 +18,6 @@ public class LoadData {
             String json = new String(Files.readAllBytes(Paths.get("src/main/resources/badMods.json")));
             JSONObject obj = new JSONObject(json);
             JSONArray badMods = obj.getJSONArray("not_supported_mods");
-            AmarLogger.info("String for badMods [" + badMods.toString() + "]");
             return badMods;
         } catch (IOException | JSONException e) {
             AmarLogger.error("Failed to fetch jsonarray (not_supported_mods)", e);
@@ -26,16 +25,31 @@ public class LoadData {
         }
     }
 
+    public static JSONArray staff(){
+         try {
+            String json = new String(Files.readAllBytes(Paths.get("src/main/resources/staff.json")));
+                JSONObject obj = new JSONObject(json);
+                JSONArray staff = obj.getJSONArray("Staff_roles");
+                return staff;
+         } catch (JSONException | IOException e) {
+            AmarLogger.error("[Failed to load staff role IDs]", e);
+            return null;
+         }
+    }
+
     /*
      * All of the .env sections ^-^
      */
 
+    public static String modRole(){
+        return load.get("MOD_ROLE_ID");
+    }
     public static String BotToken() {
         return load.get("BOT_TOKEN");
     }
 
     public static String prefix(){
-        return load.get("PREFIX");
+        return load.get("BOT_PREFIX");
     }
 
     public static String forumChannelId() {
@@ -50,19 +64,11 @@ public class LoadData {
         return load.get("LOG_CHANNEL_ID");
     }
 
-    public static String modRoleId() {
-        return load.get("MOD_ROLE_ID");
-    }
-
-    public static String adminRoleId() {
-        return load.get("ADMIN_ROLE_ID");
-    }
-
     public static String supportBanned() {
         return load.get("SUP_BANNED_ROLE_ID");
     }
 
-    public static String helperRoleId() {
-        return load.get("HELPER_ROLE_ID");
+    public static String contRoleId(){
+        return load.get("CONT_ROLE_ID");
     }
 }

@@ -46,7 +46,8 @@ public class MemberPubished extends ListenerAdapter {
           emb.getTitle().startsWith("warn | case") ||
           emb.getTitle().startsWith("kick | case") ||
           emb.getTitle().startsWith("ban | case") ||
-          emb.getTitle().startsWith("unban || case")) {
+          emb.getTitle().startsWith("unban | case") ||
+          emb.getTitle().startsWith("tempban | case")) {
 
         String[] des = emb.getDescription().split("\n");
 
@@ -87,6 +88,8 @@ public class MemberPubished extends ListenerAdapter {
 
           else if (emb.getTitle().startsWith("unban | case"))
             verdict.sendMessageEmbeds(unban(target).build()).queue();
+          else if (emb.getTitle().startsWith("tempban | case"))
+            verdict.sendMessageEmbeds(tempBan(target).build()).queue();
         });
       }
     }
@@ -118,13 +121,13 @@ public class MemberPubished extends ListenerAdapter {
   /* Embeds for the sake of cleaning the code abit */
   private EmbedBuilder timeOut(User target) {
     EmbedBuilder em = new EmbedBuilder();
-    em.setTitle("Memebr muted!");
+    em.setTitle("Member muted!");
     em.setThumbnail(target.getAvatarUrl());
-    em.setDescription("### Moderator:\n" + mod
-        + "\n### Target:\n" + target.getAsMention()
-        + "\n### Target ID:\n" + target.getId()
-        + "\n### Reason:\n" + reason
-        + "\n### Duration:\n" + duration);
+    em.setDescription("**Moderator**:\n" + mod
+        + "\n**Target**:\n" + target.getAsMention()
+        + "\n**Target ID**:\n" + target.getId()
+        + "\n**Reason**:\n" + reason
+        + "\n**Duration**:\n" + duration);
     em.setColor(Color.RED);
     em.setTimestamp(OffsetDateTime.now());
     return em;
@@ -132,12 +135,12 @@ public class MemberPubished extends ListenerAdapter {
 
   private EmbedBuilder warn(User target) {
     EmbedBuilder em = new EmbedBuilder();
-    em.setTitle("Membr warned!");
+    em.setTitle("Member warned!");
     em.setThumbnail(target.getAvatarUrl());
-    em.setDescription("### Moderator:\n" + mod
-        + "\n### Target:\n" + target.getAsMention()
-        + "\n### Target ID:\n" + target.getId()
-        + "\n### Reason:\n" + reason);
+   em.setDescription("**Moderator**:\n" + mod
+        + "\n**Target**:\n" + target.getAsMention()
+        + "\n**Target ID**:\n" + target.getId()
+        + "\n**Reason**:\n" + reason);
     em.setColor(Color.RED);
     em.setTimestamp(OffsetDateTime.now());
     return em;
@@ -147,10 +150,10 @@ public class MemberPubished extends ListenerAdapter {
     EmbedBuilder em = new EmbedBuilder();
     em.setTitle("Member kicked!");
     em.setThumbnail(target.getAvatarUrl());
-    em.setDescription("### Moderator:\n" + mod
-        + "### Target: \n" + target.getAsMention()
-        + "\n### Target ID: \n" + target.getId()
-        + "\n### Reason: \n" + reason);
+   em.setDescription("**Moderator**:\n" + mod
+        + "\n**Target**:\n" + target.getAsMention()
+        + "\n**Target ID**:\n" + target.getId()
+        + "\n**Reason**:\n" + reason);
     em.setColor(Color.RED);
     em.setTimestamp(OffsetDateTime.now());
     return em;
@@ -160,10 +163,24 @@ public class MemberPubished extends ListenerAdapter {
     EmbedBuilder em = new EmbedBuilder();
     em.setTitle("Member banned!");
     em.setThumbnail(target.getAvatarUrl());
-    em.setDescription("### Moderator:\n" + mod
-        + "### Target: \n" + target.getAsMention()
-        + "\n### Target ID: \n" + target.getId()
-        + "\n### Reason: \n" + reason);
+    em.setDescription("**Moderator**:\n" + mod
+        + "\n**Target**:\n" + target.getAsMention()
+        + "\n**Target ID**:\n" + target.getId()
+        + "\n**Reason**:\n" + reason);
+    em.setColor(Color.RED);
+    em.setTimestamp(OffsetDateTime.now());
+    return em;
+  }
+
+  private EmbedBuilder tempBan(User target){
+  EmbedBuilder em = new EmbedBuilder();
+  em.setTitle("Member tempban!");
+    em.setThumbnail(target.getAvatarUrl());
+    em.setDescription("**Moderator**:\n" + mod
+        + "\n**Target**:\n" + target.getAsMention()
+        + "\n**Target ID**:\n" + target.getId()
+        + "\n**Reason**:\n" + reason
+        + "\n**Duration**:\n" + duration);
     em.setColor(Color.RED);
     em.setTimestamp(OffsetDateTime.now());
     return em;
@@ -173,10 +190,10 @@ public class MemberPubished extends ListenerAdapter {
     EmbedBuilder em = new EmbedBuilder();
     em.setTitle("Member unbanned!");
     em.setThumbnail(target.getAvatarUrl());
-    em.setDescription("### Moderator:\n" + mod
-        + "### Target: \n" + target.getAsMention()
-        + "\n### Target ID: \n" + target.getId()
-        + "\n### Reason: \n" + reason);
+   em.setDescription("**Moderator**:\n" + mod
+        + "\n**Target**:\n" + target.getAsMention()
+        + "\n**Target ID**:\n" + target.getId()
+        + "\n**Reason**:\n" + reason);
     em.setColor(Color.GREEN);
     em.setTimestamp(OffsetDateTime.now());
     return em;
