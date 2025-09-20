@@ -177,7 +177,7 @@ public class SupportPosts extends ListenerAdapter {
     }
 
     @Override
-    @SuppressWarnings({ "null", "unlikely-arg-type", "unused" })
+    @SuppressWarnings({ "null", "unused" })
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor().isBot())
             return;

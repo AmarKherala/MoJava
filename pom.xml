@@ -28,8 +28,8 @@
         <!--LOADING DATA-->
         <dependency>
             <groupId>net.amar</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.0.0</version>
+            <artifactId>org-json</artifactId>
+            <version>1.0</version>
         </dependency>
 
 

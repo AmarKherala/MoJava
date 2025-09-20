@@ -11,3 +11,7 @@ dependency-reduced-pom.xml
 # logback
 logback.xml
 logs
+
+# random vs bs
+.settings
+.vscode

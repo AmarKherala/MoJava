@@ -1,15 +1,18 @@
 package net.amar.mojo.commands.util;
 
-import net.amar.mojo.core.LoadData;
+import java.awt.Color;
+import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.amar.mojo.commands.CmdInterface;
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.amar.mojo.core.LoadData;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-
-import java.awt.Color;
-import java.time.OffsetDateTime;
-import java.util.*;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 @SuppressWarnings("null")
 public class modping implements CmdInterface {
     static String mod = LoadData.modRole();
@@ -53,11 +56,12 @@ public class modping implements CmdInterface {
         }
         EmbedBuilder em = new EmbedBuilder();
         em.setTitle("Mod ping");
-        em.setDescription(pings.toString().trim()+"\n**NOTE TO MODS**:\nIf the modping was done for no purpose, feel free to punsish the user.");
+        em.setDescription("**NOTE TO MODS**:\nIf the modping was done for no purpose, feel free to punsish the user.");
         em.setColor(Color.RED);
         em.setFooter("Requested by: "+event.getUser().getName(), event.getUser().getAvatarUrl());
         em.setTimestamp(OffsetDateTime.now());
-        event.replyEmbeds(em.build()).queue();
+        event.reply(pings.toString().trim()).queue();
+        event.getChannel().sendMessageEmbeds(em.build()).queue();
     }
     
 }

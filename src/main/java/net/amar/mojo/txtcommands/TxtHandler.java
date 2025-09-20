@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.amar.mojo.core.LoadData;
-import net.amar.mojo.txtcommands.commands.fun.modping;
+import net.amar.mojo.txtcommands.commands.fun.mopding;
+import net.amar.mojo.txtcommands.commands.info.help;
 import net.amar.mojo.txtcommands.commands.info.ping;
 import net.amar.mojo.txtcommands.commands.modCommands.lockPost;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -16,9 +17,15 @@ public class TxtHandler extends ListenerAdapter{
     private final Map<String, TxtInterface> txtcmds = new HashMap<>();
 
     public TxtHandler(){
+        // info
         register(new ping());
+        register(new help());
+
+        //fun
+        register(new mopding());
+        
+        // moderation
         register(new lockPost());
-        register(new modping());
     }
 
     private void register(TxtInterface cmd) {

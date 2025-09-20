@@ -114,7 +114,7 @@ public class MemberPubished extends ListenerAdapter {
         verdict.sendMessageEmbeds(e.build()).queue();
       }
     } catch (Exception e) {
-      AmarLogger.error("Something went wrong. maybe missing perms?", e);
+      AmarLogger.error("Failed to send verdict, might be missing perms.", e);
     }
   }
 
