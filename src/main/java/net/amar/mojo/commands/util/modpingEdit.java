@@ -56,7 +56,7 @@ public class modpingEdit implements CmdInterface{
             arr.put(role.getId());
             event.reply("Successfully added role "+role.getName()+" to modping roles").queue();
         }
-     // save changes
+     
         try (FileWriter writer = new FileWriter(path)){
            writer.write(obj.toString());
            event.reply("Successfully added role: "+role.getName()+" to modping roles").queue();
