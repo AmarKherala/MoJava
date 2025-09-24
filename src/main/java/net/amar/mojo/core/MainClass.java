@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 public class MainClass {
@@ -32,7 +33,6 @@ public class MainClass {
         try {
             AmarLogger.info("Starting...");
             jda = JDABuilder.createDefault(token)
-                    .setMemberCachePolicy(MemberCachePolicy.ALL)
                     .enableIntents(EnumSet.allOf(GatewayIntent.class))
 		            .setActivity(Activity.watching("The support threads"))
                     .addEventListeners(
@@ -61,8 +61,16 @@ public class MainClass {
                                     
                     Commands.slash("mod-list", "banned mods list")
                             .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MODERATE_MEMBERS)),
-
-                    Commands.slash("modping","only use when necessary"))
+                    // modping, modping-edit ,modping-list
+                    Commands.slash("modping","only use when necessary"),
+                    
+                    Commands.slash("modping-edit", "add-remove a role to modping")
+                    .addOption(OptionType.ROLE, "role", "role to add-remove",true)
+                    .addOptions( new OptionData(OptionType.STRING,"edit","remove or add",true)
+                    .addChoice("remove", "remove")
+                    .addChoice("add", "add"))
+                    .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
+                    )
                     .queue(
                             success -> AmarLogger.info("successfully added mojo server commands"),
                             failure -> AmarLogger.warn("couldn't add mojo server commands"));

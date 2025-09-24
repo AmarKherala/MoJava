@@ -23,15 +23,15 @@ public class lockPost implements TxtInterface{
             ThreadChannel ch = event.getChannel().asThreadChannel();
             if (ch.getParentChannel() instanceof ForumChannel forum && forum.getId().equals(LoadData.forumChannelId())){
                 event.getGuild().retrieveMember(event.getAuthor()).queue(user->{
-                     boolean isUserStaff = user.getRoles().stream()
-                            .anyMatch((role) -> {
-                                for (int i = 0; i<staff.length(); i++){
-                                    if (role.getId().equals(staff.getString(i))){
-                                        return true;
-                                    }
-                                }
-                                return false;
-                            });
+                boolean isUserStaff = user.getRoles().stream()
+                .anyMatch((role) -> {
+                for (int i = 0; i<staff.length(); i++){
+                if (role.getId().equals(staff.getString(i))){
+                 return true;
+                        }
+                     }
+                 return false;
+                 });
 
                     if (isUserStaff){
                         ch.sendMessage("Closing post by command from "+user.getAsMention()).queue();
