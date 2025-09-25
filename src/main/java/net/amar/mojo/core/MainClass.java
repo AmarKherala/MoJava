@@ -47,6 +47,25 @@ public class MainClass {
         }
         jda.awaitReady();
         Guild mojo = jda.getGuildById(mojoGuildId);
+        mojoCommands(mojo);
+        addCommands();
+    }
+
+    static void addCommands() {
+        jda.updateCommands()
+                .addCommands(
+                        Commands.slash("info", "information about the bot"),
+                        Commands.slash("info-host","informatiob about the host"),
+                        Commands.slash("set-opacity", "change the opacity of ur mojo buttons")
+                        .addOption(OptionType.NUMBER, "value", "opacity value")
+                        .addOption(OptionType.ATTACHMENT, "json", "controlmap json file")
+                        )
+                .queue(
+                        success -> AmarLogger.info("successfully added commands"),
+                        failure -> AmarLogger.warn("couldnt add commands"));
+    }
+
+    static void mojoCommands(Guild mojo){
         if (mojo != null) {
             // mojo only commands
             mojo.updateCommands().addCommands(
@@ -77,20 +96,5 @@ public class MainClass {
         } else {
             AmarLogger.warn("Couldnt find mojo server...");
         }
-        addCommands();
-    }
-
-    static void addCommands() {
-        jda.updateCommands()
-                .addCommands(
-                        Commands.slash("info", "information about the bot"),
-                        Commands.slash("info-host","informatiob about the host"),
-                        Commands.slash("set-opacity", "change the opacity of ur mojo buttons")
-                        .addOption(OptionType.NUMBER, "value", "opacity value")
-                        .addOption(OptionType.ATTACHMENT, "json", "controlmap json file")
-                        )
-                .queue(
-                        success -> AmarLogger.info("successfully added commands"),
-                        failure -> AmarLogger.warn("couldnt add commands"));
     }
 }
