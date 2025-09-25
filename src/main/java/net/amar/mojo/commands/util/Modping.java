@@ -21,7 +21,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 @SuppressWarnings("null")
-public class ModPing implements CmdInterface {
+public class Modping implements CmdInterface {
 
     private final Map<String, Long> lastUsage = new HashMap<>();
     @Override
