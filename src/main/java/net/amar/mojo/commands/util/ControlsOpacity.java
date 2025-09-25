@@ -12,7 +12,7 @@ import net.amar.mojo.handler.RequestsHandler;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 @SuppressWarnings("")
-public class controlOpacity implements CmdInterface {
+public class ControlsOpacity implements CmdInterface {
 
     @Override
     public String getName() {
@@ -54,7 +54,9 @@ public class controlOpacity implements CmdInterface {
             event.reply("thinking...").queue(hook -> {
                 hook.sendMessage("Success!")
                         .addFiles(net.dv8tion.jda.api.utils.FileUpload.fromData(stream, fileName))
-                        .queue();
+                        .queue(Msg ->{
+                    hook.deleteOriginal().queue();
+                        });
             });
 
         } catch (JSONException e) {

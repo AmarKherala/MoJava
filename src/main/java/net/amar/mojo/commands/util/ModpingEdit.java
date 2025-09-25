@@ -13,7 +13,7 @@ import net.amar.mojo.core.AmarLogger;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-public class modpingEdit implements CmdInterface{
+public class ModpingEdit implements CmdInterface{
 
     @Override
     public String getName() {
@@ -25,7 +25,7 @@ public class modpingEdit implements CmdInterface{
        return "add-remove a role to modping";
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("")
     @Override
     public void executeSlash(SlashCommandInteractionEvent event) {
         String path ="src/main/resources/staff.json";

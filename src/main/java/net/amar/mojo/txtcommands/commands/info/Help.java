@@ -3,7 +3,7 @@ package net.amar.mojo.txtcommands.commands.info;
 import net.amar.mojo.txtcommands.TxtInterface;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class help implements TxtInterface{
+public class Help implements TxtInterface{
 
     @Override
     public String getName() {

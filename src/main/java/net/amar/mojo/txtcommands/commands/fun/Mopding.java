@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 import net.amar.mojo.txtcommands.TxtInterface;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-public class mopding implements TxtInterface{
+public class Mopding implements TxtInterface{
 
     @Override
     public String getName() {

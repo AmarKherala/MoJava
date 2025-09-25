@@ -1,4 +1,4 @@
-package net.amar.mojo.txtcommands.commands.modCommands;
+package net.amar.mojo.txtcommands.commands.moderators;
 
 import org.json.JSONArray;
 

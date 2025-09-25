@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.amar.mojo.core.LoadData;
-import net.amar.mojo.txtcommands.commands.fun.mopding;
-import net.amar.mojo.txtcommands.commands.info.help;
-import net.amar.mojo.txtcommands.commands.info.ping;
-import net.amar.mojo.txtcommands.commands.modCommands.lockPost;
+import net.amar.mojo.txtcommands.commands.fun.Mopding;
+import net.amar.mojo.txtcommands.commands.info.Help;
+import net.amar.mojo.txtcommands.commands.info.Ping;
+import net.amar.mojo.txtcommands.commands.moderators.lockPost;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -18,11 +18,11 @@ public class TxtHandler extends ListenerAdapter{
 
     public TxtHandler(){
         // info
-        register(new ping());
-        register(new help());
+        register(new Ping());
+        register(new Help());
 
         //fun
-        register(new mopding());
+        register(new Mopding());
         
         // moderation
         register(new lockPost());
