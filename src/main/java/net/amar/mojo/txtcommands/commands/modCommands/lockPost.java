@@ -21,7 +21,7 @@ public class lockPost implements TxtInterface{
     public void executeMsg(MessageReceivedEvent event, String[] args) {
         if (event.getChannelType().isThread()){
             ThreadChannel ch = event.getChannel().asThreadChannel();
-            if (ch.getParentChannel() instanceof ForumChannel forum && forum.getId().equals(LoadData.forumChannelId())){
+            if (ch.getParentChannel() instanceof ForumChannel){
                 event.getGuild().retrieveMember(event.getAuthor()).queue(user->{
                 boolean isUserStaff = user.getRoles().stream()
                 .anyMatch((role) -> {

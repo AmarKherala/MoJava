@@ -14,8 +14,8 @@ public class RequestsHandler {
     
     private static final OkHttpClient client = new OkHttpClient();
     @SuppressWarnings("null")
-    public static String fetchLog(String log){
-        Request req = new Request.Builder().url(log).build();
+    public static String fetchLog(String url){
+        Request req = new Request.Builder().url(url).build();
 
         try(Response res = client.newCall(req).execute()){
       return res.body().string();

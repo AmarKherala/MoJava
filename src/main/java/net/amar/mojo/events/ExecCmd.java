@@ -8,6 +8,7 @@ import net.amar.mojo.commands.info.HostInfo;
 import net.amar.mojo.commands.mods.BanList;
 import net.amar.mojo.commands.mods.BanMod;
 import net.amar.mojo.commands.mods.UnBanMod;
+import net.amar.mojo.commands.util.controlOpacity;
 import net.amar.mojo.commands.util.modping;
 import net.amar.mojo.commands.util.modpingEdit;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -25,6 +26,7 @@ public class ExecCmd extends ListenerAdapter {
      commands.put("unban-mod", new UnBanMod());
      commands.put("modping", new modping());
      commands.put("modping-edit", new modpingEdit());
+     commands.put("set-opacity", new controlOpacity());
     }
 
     @Override

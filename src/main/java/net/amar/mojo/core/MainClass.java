@@ -16,7 +16,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.utils.MemberCachePolicy;
+
 public class MainClass {
 
     private static JDA jda;
@@ -84,7 +84,11 @@ public class MainClass {
         jda.updateCommands()
                 .addCommands(
                         Commands.slash("info", "information about the bot"),
-                        Commands.slash("info-host","informatiob about the host"))
+                        Commands.slash("info-host","informatiob about the host"),
+                        Commands.slash("set-opacity", "change the opacity of ur mojo buttons")
+                        .addOption(OptionType.NUMBER, "value", "opacity value")
+                        .addOption(OptionType.ATTACHMENT, "json", "controlmap json file")
+                        )
                 .queue(
                         success -> AmarLogger.info("successfully added commands"),
                         failure -> AmarLogger.warn("couldnt add commands"));
