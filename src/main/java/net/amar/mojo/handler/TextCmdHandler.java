@@ -1,34 +1,34 @@
-package net.amar.mojo.txtcommands;
+package net.amar.mojo.handler;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
+import net.amar.mojo.commands.TextInterface;
+import net.amar.mojo.commands.text.fun.Mopding;
+import net.amar.mojo.commands.text.info.Help;
+import net.amar.mojo.commands.text.info.Ping;
+import net.amar.mojo.commands.text.moderators.LockPost;
 import net.amar.mojo.core.LoadData;
-import net.amar.mojo.txtcommands.commands.fun.Mopding;
-import net.amar.mojo.txtcommands.commands.info.Help;
-import net.amar.mojo.txtcommands.commands.info.Ping;
-import net.amar.mojo.txtcommands.commands.moderators.lockPost;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class TxtHandler extends ListenerAdapter{
+public class TextCmdHandler extends ListenerAdapter{
     static String prefix = LoadData.prefix();
-    private final Map<String, TxtInterface> txtcmds = new HashMap<>();
+    private final Map<String, TextInterface> txtcmds = new HashMap<>();
 
-    public TxtHandler(){
+    public TextCmdHandler(){
         // info
-        register(new Ping());
-        register(new Help());
+        register((TextInterface) new Ping());
+        register((TextInterface) new Help());
 
         //fun
-        register(new Mopding());
+        register((TextInterface) new Mopding());
         
         // moderation
-        register(new lockPost());
+        register(new LockPost());
     }
 
-    private void register(TxtInterface cmd) {
+    private void register(TextInterface cmd) {
     txtcmds.put(cmd.getName().toLowerCase(), cmd);
     }
 
@@ -45,7 +45,7 @@ public class TxtHandler extends ListenerAdapter{
         String TxtCmdName = parts[0].toLowerCase();
         String[] args = Arrays.copyOfRange(parts,1,parts.length);
 
-        TxtInterface cmd = txtcmds.get(TxtCmdName);
+        TextInterface cmd = txtcmds.get(TxtCmdName);
 
         if (cmd != null){
          cmd.executeMsg(event, args);

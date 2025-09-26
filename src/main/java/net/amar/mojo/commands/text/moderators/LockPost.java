@@ -1,14 +1,14 @@
-package net.amar.mojo.txtcommands.commands.moderators;
+package net.amar.mojo.commands.text.moderators;
 
 import org.json.JSONArray;
 
+import net.amar.mojo.commands.TextInterface;
 import net.amar.mojo.core.LoadData;
-import net.amar.mojo.txtcommands.TxtInterface;
 import net.dv8tion.jda.api.entities.channel.concrete.ForumChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class lockPost implements TxtInterface{
+public class LockPost implements TextInterface{
 
     static JSONArray staff = LoadData.staff();
 

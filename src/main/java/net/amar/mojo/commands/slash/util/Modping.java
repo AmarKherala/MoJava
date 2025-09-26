@@ -1,4 +1,4 @@
-package net.amar.mojo.commands.util;
+package net.amar.mojo.commands.slash.util;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,13 +15,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import net.amar.mojo.commands.CmdInterface;
+import net.amar.mojo.commands.SlashCommand;
 import net.amar.mojo.core.AmarLogger;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 @SuppressWarnings("null")
-public class Modping implements CmdInterface {
+public class Modping implements SlashCommand {
 
     private final Map<String, Long> lastUsage = new HashMap<>();
     @Override

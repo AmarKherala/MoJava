@@ -1,4 +1,4 @@
-package net.amar.mojo.commands.util;
+package net.amar.mojo.commands.slash.util;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,12 +8,12 @@ import java.nio.file.Paths;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import net.amar.mojo.commands.CmdInterface;
+import net.amar.mojo.commands.SlashCommand;
 import net.amar.mojo.core.AmarLogger;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-public class ModpingEdit implements CmdInterface{
+public class ModpingEdit implements SlashCommand{
 
     @Override
     public String getName() {

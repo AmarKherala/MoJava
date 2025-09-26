@@ -1,9 +1,9 @@
-package net.amar.mojo.txtcommands.commands.info;
+package net.amar.mojo.commands.text.info;
 
-import net.amar.mojo.txtcommands.TxtInterface;
+import net.amar.mojo.commands.TextInterface;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class Ping implements TxtInterface {
+public class Ping implements TextInterface {
 
     @Override
     public String getName() {

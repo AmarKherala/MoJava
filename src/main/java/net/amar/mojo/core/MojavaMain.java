@@ -2,10 +2,10 @@ package net.amar.mojo.core;
 
 import java.util.EnumSet;
 
-import net.amar.mojo.events.ExecCmd;
 import net.amar.mojo.events.MemberPubished;
 import net.amar.mojo.events.SupportPosts;
-import net.amar.mojo.txtcommands.TxtHandler;
+import net.amar.mojo.handler.SlashCmdHandler;
+import net.amar.mojo.handler.TextCmdHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.Permission;
@@ -38,8 +38,8 @@ public class MojavaMain {
                     .addEventListeners(
                             new SupportPosts(),
                             new MemberPubished(),
-                            new ExecCmd(),
-                            new TxtHandler()
+                            new SlashCmdHandler(),
+                            new TextCmdHandler()
                             )
                     .build();
         } catch (Exception e) {

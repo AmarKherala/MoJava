@@ -1,4 +1,4 @@
-package net.amar.mojo.commands.util;
+package net.amar.mojo.commands.slash.util;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
@@ -6,13 +6,13 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import net.amar.mojo.commands.CmdInterface;
+import net.amar.mojo.commands.SlashCommand;
 import net.amar.mojo.core.AmarLogger;
 import net.amar.mojo.handler.RequestsHandler;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 @SuppressWarnings("")
-public class ControlsOpacity implements CmdInterface {
+public class ControlsOpacity implements SlashCommand {
 
     @Override
     public String getName() {

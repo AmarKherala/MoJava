@@ -1,10 +1,10 @@
-package net.amar.mojo.commands.info;
+package net.amar.mojo.commands.slash.info;
 
-import net.amar.mojo.commands.CmdInterface;
+import net.amar.mojo.commands.SlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-public class HostInfo implements CmdInterface {
+public class HostInfo implements SlashCommand {
 
     @Override
     public String getName() {

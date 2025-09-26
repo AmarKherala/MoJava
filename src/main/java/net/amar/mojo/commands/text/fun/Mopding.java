@@ -1,12 +1,12 @@
-package net.amar.mojo.txtcommands.commands.fun;
+package net.amar.mojo.commands.text.fun;
 
 import java.awt.Color;
 import java.time.OffsetDateTime;
 
-import net.amar.mojo.txtcommands.TxtInterface;
+import net.amar.mojo.commands.TextInterface;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-public class Mopding implements TxtInterface{
+public class Mopding implements TextInterface{
 
     @Override
     public String getName() {

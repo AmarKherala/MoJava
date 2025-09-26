@@ -1,4 +1,4 @@
-package net.amar.mojo.commands.mods;
+package net.amar.mojo.commands.slash.mods;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,12 +9,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import net.amar.mojo.commands.CmdInterface;
+import net.amar.mojo.commands.SlashCommand;
 import net.amar.mojo.core.AmarLogger;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 @SuppressWarnings("null")
-public class BanMod implements CmdInterface {
+public class BanMod implements SlashCommand {
 
     @Override
     public String getName() {

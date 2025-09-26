@@ -1,16 +1,16 @@
-package net.amar.mojo.commands.info;
+package net.amar.mojo.commands.slash.info;
 
 import java.awt.Color;
 import java.time.OffsetDateTime;
 
-import net.amar.mojo.commands.CmdInterface;
+import net.amar.mojo.commands.SlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-public class BotInfo implements CmdInterface{
+public class BotInfo implements SlashCommand{
 
 
     @Override
