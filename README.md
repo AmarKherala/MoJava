@@ -1,6 +1,6 @@
 <div align="center">
   <img alt="Discord" src="https://img.shields.io/discord/1365346109131722753?style=for-the-badge&link=https%3A%2F%2Fdiscord.gg%2F4s9YUyJaSW">
-
+</div>
 
 ```
 Mojava
