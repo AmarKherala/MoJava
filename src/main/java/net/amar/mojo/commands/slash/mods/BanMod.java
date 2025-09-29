@@ -13,9 +13,12 @@ import net.amar.mojo.commands.SlashCommand;
 import net.amar.mojo.core.AmarLogger;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-@SuppressWarnings("null")
+@SuppressWarnings("")
 public class BanMod implements SlashCommand {
-
+    @Override
+    public String Catagory() {
+      return "mods";
+    }
     @Override
     public String getName() {
         return "ban-mod";

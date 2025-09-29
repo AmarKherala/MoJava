@@ -37,4 +37,34 @@ public class SlashCmdHandler extends ListenerAdapter {
             cmd.executeSlash(event);
         }
     }
+
+    public static String infoCommands() {
+      StringBuilder info = new StringBuilder();
+      for (SlashCommand cmd: commands.values()){
+        if (cmd.Catagory().equals("info")){
+          info.append("**__"+cmd.getName()+"__ :**").append(cmd.getDescription()).append("\n");
+        }
+      }
+      return info.toString();
+    }
+
+    public static String util() {
+      StringBuilder util = new StringBuilder();
+      for (SlashCommand cmd: commands.values()){
+        if (cmd.Catagory().equals("util")){
+          util.append("**__"+cmd.getName()+"__ :**").append(cmd.getDescription()).append("\n");
+        }
+      }
+      return util.toString();
+    }
+
+    public static String mods(){
+      StringBuilder mods = new StringBuilder();
+      for (SlashCommand cmd: commands.values()){
+        if (cmd.Catagory().equals("mods")){
+          mods.append("**__"+cmd.getName()+"__ :**").append(cmd.getDescription()).append("\n");
+        }
+      }
+      return mods.toString();
+    }
 }

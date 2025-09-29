@@ -14,7 +14,10 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 public class ModpingEdit implements SlashCommand{
-
+    @Override
+    public String Catagory() {
+      return "util";
+    }
     @Override
     public String getName() {
         return "modping-edit";
@@ -22,7 +25,7 @@ public class ModpingEdit implements SlashCommand{
 
     @Override
     public String getDescription() {
-       return "add-remove a role to modping";
+       return "add-remove a role to modping (admin only)";
     }
 
     @SuppressWarnings("")

@@ -11,7 +11,10 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 public class BotInfo implements SlashCommand{
-
+    @Override
+    public String Catagory() {
+      return "info";
+    }
 
     @Override
     public String getName() {

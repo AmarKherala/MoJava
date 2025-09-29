@@ -15,6 +15,10 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 public class ControlsOpacity implements SlashCommand {
 
     @Override
+    public String Catagory() {
+      return "util";
+    }
+    @Override
     public String getName() {
         return "set-opacity";
     }
@@ -35,7 +39,7 @@ public class ControlsOpacity implements SlashCommand {
             }
 
             String jsonUrl = jsonOption.getAsAttachment().getUrl();
-            String fileName = jsonOption.getAsAttachment().getFileName(); // capture filename
+            String fileName = jsonOption.getAsAttachment().getFileName(); 
 
             String jsom = RequestsHandler.fetchLog(jsonUrl);
             JSONObject obj = new JSONObject(jsom);
@@ -51,12 +55,10 @@ public class ControlsOpacity implements SlashCommand {
             byte[] jsonBytes = obj.toString(4).getBytes(StandardCharsets.UTF_8);
             ByteArrayInputStream stream = new ByteArrayInputStream(jsonBytes);
 
-            event.reply("thinking...").queue(hook -> {
-                hook.sendMessage("Success!")
+            event.reply("thinking...").setEphemeral(true).queue(hook -> {
+                hook.sendMessage("Successfully changed the opacity of all the buttons to "+opacity+"!")
                         .addFiles(net.dv8tion.jda.api.utils.FileUpload.fromData(stream, fileName))
-                        .queue(Msg ->{
-                    hook.deleteOriginal().queue();
-                        });
+                        .queue();
             });
 
         } catch (JSONException e) {

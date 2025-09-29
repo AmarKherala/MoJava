@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class TextCmdHandler extends ListenerAdapter{
     static String prefix = LoadData.prefix();
-    private final Map<String, TextInterface> txtcmds = new HashMap<>();
+    private static final Map<String, TextInterface> txtcmds = new HashMap<>();
 
     public TextCmdHandler(){
         // info
@@ -34,15 +34,17 @@ public class TextCmdHandler extends ListenerAdapter{
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event){
-        if (prefix == null || prefix.isBlank()){
+      if (event.getAuthor().isBot()) return;
+      if (prefix == null || prefix.isBlank()){
             prefix = "?";
         }
         String rawMsg = event.getMessage().getContentRaw();
-
-        if (event.getAuthor().isBot() || !rawMsg.startsWith(prefix)) return;
+     
+        if (!rawMsg.toLowerCase().startsWith(prefix) || rawMsg.length() <= prefix.length()) return;
 
         String[] parts = rawMsg.substring(prefix.length()).split("\\s+");
         String TxtCmdName = parts[0].toLowerCase();
+        
         String[] args = Arrays.copyOfRange(parts,1,parts.length);
 
         TextInterface cmd = txtcmds.get(TxtCmdName);
@@ -50,5 +52,35 @@ public class TextCmdHandler extends ListenerAdapter{
         if (cmd != null){
          cmd.executeMsg(event, args);
         }
+    }
+
+    public static String infoCommands() {
+       StringBuilder info = new StringBuilder();
+         for (TextInterface cmd: txtcmds.values()){
+           if (cmd.Catagory().equals("info")){
+             info.append("**__"+cmd.getName()+"__** :").append(cmd.Description()).append("\n");           
+           }
+         }
+       return info.toString();
+    }
+
+    public static String funCommands() {
+      StringBuilder fun = new StringBuilder();
+      for (TextInterface cmd: txtcmds.values()){
+        if (cmd.Catagory().equals("fun")){
+          fun.append("**__"+cmd.getName()+"__** :").append(cmd.Description()).append("\n");
+        }
+      }
+      return fun.toString();
+    }
+
+    public static  String modCommands() {
+      StringBuilder mod = new StringBuilder();
+      for (TextInterface cmd: txtcmds.values()){
+        if (cmd.Catagory().equals("staff")){
+          mod.append("**__"+cmd.getName()+"__** :").append(cmd.Description()).append("\n");
+        }
+      }
+      return mod.toString();
     }
 }

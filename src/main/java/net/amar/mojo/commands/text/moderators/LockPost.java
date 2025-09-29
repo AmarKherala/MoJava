@@ -11,10 +11,19 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class LockPost implements TextInterface{
 
     static JSONArray staff = LoadData.staff();
+    @Override
+    public String Catagory() {
+      return "staff";
+    }
 
     @Override
     public String getName() {
         return "lock";
+    }
+
+    @Override
+    public String Description() {
+      return "locks a support post";
     }
 
     @Override

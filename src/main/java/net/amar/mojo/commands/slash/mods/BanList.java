@@ -15,7 +15,10 @@ import net.amar.mojo.core.AmarLogger;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 public class BanList implements SlashCommand {
-
+    @Override
+    public String Catagory() {
+      return "mods";
+    }
     @Override
     public String getName() {
         return "mod-list";

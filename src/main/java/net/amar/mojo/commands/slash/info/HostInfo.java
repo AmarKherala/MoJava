@@ -5,6 +5,10 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 public class HostInfo implements SlashCommand {
+    @Override
+    public String Catagory() {
+      return "info";
+    }
 
     @Override
     public String getName() {
@@ -13,7 +17,7 @@ public class HostInfo implements SlashCommand {
 
     @Override
     public String getDescription() {
-    return "informatiob about the host";
+    return "information about the host";
     }
 
     @Override

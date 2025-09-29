@@ -4,10 +4,19 @@ import net.amar.mojo.commands.TextInterface;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class Ping implements TextInterface {
+    @Override
+    public String Catagory() {
+      return "info";
+    }
 
     @Override
     public String getName() {
         return "ping";
+    }
+
+    @Override
+    public String Description(){
+      return "tells the bots ping to discord's gateway";
     }
 
     @Override

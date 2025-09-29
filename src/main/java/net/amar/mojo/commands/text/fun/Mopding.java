@@ -7,10 +7,19 @@ import net.amar.mojo.commands.TextInterface;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class Mopding implements TextInterface{
+    @Override
+    public String Catagory(){
+      return "fun";
+    }
 
     @Override
     public String getName() {
         return "mopding";
+    }
+
+    @Override
+    public String Description(){
+      return "funny mopding";
     }
 
     @Override

@@ -24,6 +24,12 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 public class Modping implements SlashCommand {
 
     private final Map<String, Long> lastUsage = new HashMap<>();
+
+    @Override
+    public String Catagory(){
+       return "util";
+    }
+
     @Override
     public String getName() {
        return "modping";
