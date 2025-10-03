@@ -134,7 +134,7 @@ public class SupportPosts extends ListenerAdapter {
                     "### Please read [this list](https://discord.com/channels/1365346109131722753/1390337369751949394) before you open a new support post.\n- Locking thread... 🔒")
                     .queue();
             close.getManager().setLocked(true).queue(
-                    success -> AmarLogger.info("Thread " + close + " closed due to detecting unsupported mods"),
+                    success -> close.getManager().setName("[UNSUPPORTED]").queue(),
                     failure -> AmarLogger.warn("Failed to close thread " + close));
             return;
         } else {

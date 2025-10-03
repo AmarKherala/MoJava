@@ -23,7 +23,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleAddEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-@SuppressWarnings("null")
+@SuppressWarnings("")
 public class MemberPubished extends ListenerAdapter {
 
   static String targetM = "";
@@ -97,7 +97,7 @@ public class MemberPubished extends ListenerAdapter {
 
   // support banned role detection
   @Override
-  @SuppressWarnings("null")
+  @SuppressWarnings("")
   public void onGuildMemberRoleAdd(GuildMemberRoleAddEvent event) {
     Member memberWhoGotRole = event.getMember();
     Guild mojoGuild = event.getGuild();

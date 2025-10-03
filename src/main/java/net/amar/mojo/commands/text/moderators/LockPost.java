@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class LockPost implements TextInterface{
 
+  static String label;
     static JSONArray staff = LoadData.staff();
     @Override
     public String Catagory() {
@@ -41,12 +42,17 @@ public class LockPost implements TextInterface{
                      }
                  return false;
                  });
-
-                    if (isUserStaff){
-                        ch.sendMessage("Closing post by command from "+user.getAsMention()).queue();
-                        ch.getManager().setLocked(true).queue();
-                    } else {
-                        ch.sendMessage("You are NOT a staff!").queue();
+           label = "";
+          if (args.length > 0){
+            label = "["+args[0]+"]";
+          } else {
+            label = "[RESOLVED]";
+          }
+                    if (isUserStaff || event.getAuthor().getId().equals(ch.getOwnerId())){
+                        ch.getManager().setLocked(true).queue(success -> {
+              ch.sendMessage("Closing post via request by "+event.getAuthor().getAsMention()).queue(); 
+              ch.getManager().setName(label+" "+ch.getName()).queueAfter(1, java.util.concurrent.TimeUnit.SECONDS);
+            });
                     }
                 });
             }
