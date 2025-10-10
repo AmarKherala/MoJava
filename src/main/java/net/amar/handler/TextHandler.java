@@ -8,6 +8,7 @@ import java.util.Map;
 import net.amar.Load;
 import net.amar.commands.text.TextCommand;
 import net.amar.commands.text.general.Help;
+import net.amar.commands.text.general.Ping;
 import net.amar.commands.text.staff.LockThread;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -20,6 +21,7 @@ public class TextHandler extends ListenerAdapter {
   public TextHandler() {
     registerCommands(new Help());
     registerCommands(new LockThread());
+    registerCommands(new Ping());
   }
 
   private void registerCommands(TextCommand cmd) {
