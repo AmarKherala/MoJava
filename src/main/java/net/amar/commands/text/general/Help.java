@@ -32,7 +32,7 @@ public class Help implements TextCommand{
     @Override
     public void executeMessage(MessageReceivedEvent event , String[] args){
         if (!prettyCmdList.isEmpty()) {
-            event.getMessage().reply("**Text Commands**"+prettyCmdList+"\n-# for slash commands do /help").queue();
+            event.getMessage().reply("**Text Commands**\n"+prettyCmdList+"\n-# for slash commands do /help").queue();
             Log.info("Using the already cached text commands list");
             return;
         }

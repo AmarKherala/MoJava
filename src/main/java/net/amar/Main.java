@@ -35,7 +35,7 @@ public class Main{
         try{
             jda=JDABuilder.createDefault(token)
                     .enableIntents(EnumSet.allOf(GatewayIntent.class))
-                    .setMemberCachePolicy(MemberCachePolicy.ALL)
+                    .setMemberCachePolicy(MemberCachePolicy.ONLINE)
                     .setStatus(OnlineStatus.IDLE)
                     .setActivity(Activity.customStatus(":D"))
                     .addEventListeners(

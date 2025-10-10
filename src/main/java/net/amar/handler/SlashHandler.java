@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.amar.commands.slash.general.Verify;
 import net.amar.commands.slash.staff.BanModDisplay;
 import net.amar.commands.slash.staff.BanModRemove;
 import net.amar.commands.slash.staff.BanModSupport;
@@ -24,6 +25,7 @@ public class SlashHandler extends ListenerAdapter {
     registerCommand(new BanModSupport());
     registerCommand(new BanModDisplay());
     registerCommand(new BanModRemove());
+    registerCommand(new Verify());
   }
 
   private void registerCommand(SlashCommand cmd) {
