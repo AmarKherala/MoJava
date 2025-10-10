@@ -1,0 +1,9 @@
+.idea
+.settings
+.classpath
+.project
+target
+test
+logs
+*.json
+logback.xml
