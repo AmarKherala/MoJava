@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,53 +14,59 @@
     </properties>
 
     <dependencies>
-      <dependency>
-        <groupId>org.json</groupId>
-        <artifactId>json</artifactId>
-        <version>20250517</version>
-      </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20250517</version>
+        </dependency>
 
-      <dependency>
-        <groupId>net.dv8tion</groupId>
-        <artifactId>JDA</artifactId>
-        <version>5.6.1</version>
-      </dependency>
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>5.6.1</version>
+        </dependency>
 
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>2.0.16</version>
-      </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.45.2.0</version>
+        </dependency>
 
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>1.5.19</version> 
-      </dependency> 
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.19</version>
+        </dependency>
 
     </dependencies>
 
     <build>
 
-      <plugins>
+        <plugins>
 
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <version>3.1.0</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>java</goal>
-              </goals>
-            </execution>
-            </executions> 
-          <configuration>
-            <mainClass>net.amar.Main</mainClass>
-          </configuration>
-        </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>net.amar.Main</mainClass>
+                </configuration>
+            </plugin>
 
-      </plugins>
+        </plugins>
 
     </build>
 
