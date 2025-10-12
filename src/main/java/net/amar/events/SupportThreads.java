@@ -169,26 +169,36 @@ public class SupportThreads extends ListenerAdapter{
         boolean isMc17Above = false;
         boolean isSodium = false;
 
-        for(String line : logContent){
-            Matcher matcher=pattern.matcher(line);
+        for (String line : logContent) {
+            Matcher matcher = pattern.matcher(line);
 
-            if(matcher.find()) insideModList=true;
-            if(line.contains(endMark)) insideModList=false;
+            if (matcher.find()) insideModList = true;
+            if (line.contains(endMark)) insideModList = false;
+            if (insideModList && notSupportedModsArray != null) {
 
-            if(insideModList && notSupportedModsArray!=null){
-
-                for(int i=0 ; i<notSupportedModsArray.length() ; i++){
-                    if(line.contains(notSupportedModsArray.getString(i))){
-                        isSupported=false;
-                        mods.append(notSupportedModsArray.getString(i)).append("\n");
+                for (int i = 0; i < notSupportedModsArray.length(); i++) {
+                    String modName = notSupportedModsArray.getString(i);
+                    if (line.contains(modName)) {
+                        isSupported = false;
+                        mods.append(modName).append("\n");
                     }
-                    if (logString.contains(mc17AndAbove[i])) isMc17Above = true;
-                    if (logString.contains("opengles2") && line.contains("sodium") && isMc17Above) isSodium = true;
+                }
+
+                for (String version : mc17AndAbove) {
+                    if (logString.contains(version)) {
+                        isMc17Above = true;
+                        break;
+                    }
+                }
+
+                if (logString.contains("opengles2") && line.contains("sodium") && isMc17Above) {
+                    isSodium = true;
                 }
             }
         }
 
-        if (isSodium && isMc17Above) {
+
+        if (isSodium) {
             msg.replyEmbeds(gl4esWithSodium().build()).queue();
         }
         if(!(mods.isEmpty() && isSupported)){
