@@ -10,8 +10,10 @@ import net.amar.handler.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -47,10 +49,13 @@ public class Main{
                     )
                     .build();
         } catch(Exception e){
-            Log.error("Failed to build JDA instance" , e);
+            Log.error("Failed to build Bot" , e);
         }
+
+
+
         long timeTaken = System.currentTimeMillis() - startTimer;
-        Log.info("Building JDA instance took "+timeTaken+"ms");
+        Log.info("Building Bot instance took "+timeTaken+"ms");
         jda.awaitReady();
 
         if(Load.getGuildId()!=null){
@@ -65,13 +70,29 @@ public class Main{
                 Commands.slash("help" , "shows a list of commands") ,
                 Commands.slash("mod-ban-list" , "displays the mods blacklist") ,
                 Commands.slash("verify","gains you access to pre-testing chanel") ,
+
                 Commands.slash("mod-ban-remove","remove a mod from mods blacklist")
-                                .addOption(OptionType.STRING,"mod-id","the mod to remove"),
+                        .addOption(OptionType.STRING,"mod-id","the mod to remove", true)
+                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MODERATE_MEMBERS)),
+                                
                 Commands.slash("mod-ban-support" , "adds a mod to the support blacklist")
-                        .addOption(OptionType.STRING , "mod-id" , "the mod to blacklist")
+                        .addOption(OptionType.STRING , "mod-id" , "the mod to blacklist", true)
+                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MODERATE_MEMBERS)),
+
+
+                Commands.slash("ban","ban a bad guy")
+                        .addOption(OptionType.USER, "member", "who to ban", true)
+                        .addOption(OptionType.STRING, "reason", "why ban this guy", true)
+                        .addOption(OptionType.BOOLEAN, "appealable","should the ban be appealable", false)
+                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.BAN_MEMBERS))
+
         ).queue(
                 success->Log.info("Loaded guild commands for guild "+guild.getName()+" successfully") ,
                 failure->Log.error("Failed to load commands for guid :"+guild.getName())
         );
+    }
+
+    public static JDA getJDA() {
+        return jda;
     }
 }

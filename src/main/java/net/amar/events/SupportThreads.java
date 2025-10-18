@@ -100,7 +100,7 @@ public class SupportThreads extends ListenerAdapter{
             return;
         }
         String[] logContent=logString.split("\n");
-        if(!logString.contains("git.artdeell.mojo")){
+        if(!logString.contains("git.artdeell.mojo") || !logString.contains("git.artdeell.mojo.debug")){ 
             msg.replyEmbeds(notMojoLog().build()).queue();
             return;
         }
@@ -140,6 +140,15 @@ public class SupportThreads extends ListenerAdapter{
                 javaVersion=line.substring("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo.debug/runtimes/".length()).trim();
             if(line.startsWith("Added custom env: MOJO_RENDERER="))
                 mojoRenderer=line.substring("Added custom env: MOJO_RENDERER=".length()).trim();
+        }
+        
+        if (mojoVersion.isEmpty() || deviceModel.isEmpty()) {
+        EmbedBuilder em = new EmbedBuilder();
+        em.setTitle("Invalid log!");
+        em.setDescription("The log you provided doesn't include the launcher version or device model");
+        em.setColor(Color.cyan);
+        msg.replyEmbeds(em.build()).queue();
+        return;
         }
 
         EmbedBuilder em=new EmbedBuilder();
