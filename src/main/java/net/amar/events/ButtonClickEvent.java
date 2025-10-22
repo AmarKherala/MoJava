@@ -1,5 +1,5 @@
 /*
-Until i get to a point where I'd need a separate class for each button function,
+Until I get to a point where I'd need a separate class for each button function,
 this class will handle all the button clicks
  */
 

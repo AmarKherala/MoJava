@@ -100,7 +100,7 @@ public class SupportThreads extends ListenerAdapter{
             return;
         }
         String[] logContent=logString.split("\n");
-        if(!logString.contains("git.artdeell.mojo") || !logString.contains("git.artdeell.mojo.debug")){ 
+        if(!(logString.contains("git.artdeell.mojo") || logString.contains("git.artdeell.mojo.debug"))){
             msg.replyEmbeds(notMojoLog().build()).queue();
             return;
         }
