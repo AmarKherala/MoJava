@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.amar.Load;
+import net.amar.Main;
 import net.amar.commands.text.TextCommand;
 import net.amar.commands.text.general.Help;
 import net.amar.commands.text.general.Ping;
@@ -31,7 +32,7 @@ public class TextHandler extends ListenerAdapter {
   @Override
   public void onMessageReceived(MessageReceivedEvent event) {
     
-    if (event.getAuthor().isBot()) return;
+    if (!event.getGuild().equals(Main.getJDA().getGuildById(Load.getGuildId()))) return;
 
     String rawMessage = event.getMessage().getContentRaw().toLowerCase();
 
