@@ -14,3 +14,5 @@ git clone https://github.com/AmarKherala/MoJava.git
 as you can see, there's a `/commands` folder. inside it there are 2 folders one for
 text commands and the other for slash commands, to make a new command just create a new java class
 and implement the `SlashCommand` or the `TextCommand` interfaces and start filling in the implemented methods!
+
+so long nerds...
