@@ -11,6 +11,8 @@ import net.amar.commands.text.TextCommand;
 import net.amar.commands.text.general.Help;
 import net.amar.commands.text.general.Ping;
 import net.amar.commands.text.staff.LockThread;
+import net.amar.commands.text.staff.SetOnlineStatus;
+import net.amar.commands.text.staff.SetStatus;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -23,6 +25,8 @@ public class TextHandler extends ListenerAdapter {
     registerCommands(new Help());
     registerCommands(new LockThread());
     registerCommands(new Ping());
+    registerCommands(new SetStatus());
+    registerCommands(new SetOnlineStatus());
   }
 
   private void registerCommands(TextCommand cmd) {

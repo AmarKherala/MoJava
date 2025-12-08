@@ -3,7 +3,7 @@ package net.amar.handler;
 import net.amar.Log;
 import okhttp3.*;
 
-public class UrlRequestHandlee {
+public class UrlRequestHandler {
 
  private static final OkHttpClient client = new OkHttpClient();
 

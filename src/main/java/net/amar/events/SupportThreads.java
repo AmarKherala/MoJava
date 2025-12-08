@@ -8,7 +8,7 @@ import net.amar.Log;
 import org.json.JSONArray;
 
 import net.amar.Load;
-import net.amar.handler.UrlRequestHandlee;
+import net.amar.handler.UrlRequestHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -93,7 +93,7 @@ public class SupportThreads extends ListenerAdapter{
 
         if(log==null) return;
 
-        String logString=UrlRequestHandlee.fetchMojoLog(log.getUrl());
+        String logString= UrlRequestHandler.fetchMojoLog(log.getUrl());
         if(logString==null){
             msg.reply("Couldn't parse your log.").queue();
             Log.warn("Failed to parse ["+log.getFileName()+"] from user ["+msg.getAuthor().getName()+"] in channel ["+msg.getChannel().getName()+"]");

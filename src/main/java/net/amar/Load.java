@@ -50,7 +50,11 @@ public class Load {
     public static String getBotToken() {
         return jsonObject!=null ? jsonObject.getString("token") : null;
     }
-    
+
+    public static long getOwnerId() {
+        return jsonObject!=null ? jsonObject.getLong("owner_id") : null;
+    }
+
     public static String getBotPrefix() {
         return jsonObject!=null ? jsonObject.getString("prefix") : null;
     }

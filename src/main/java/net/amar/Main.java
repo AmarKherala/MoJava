@@ -25,9 +25,9 @@ public class Main{
 
     public static void main(String[] args) throws Exception{
 
-        String token=Load.getBotToken();
-        assert token!=null;
-        if(token.isBlank()){
+        String token=Load.getBotToken()!=null ? Load.getBotToken() : null;
+
+       if(token != null && token.isEmpty()){
             Log.error("Could not load token from resources/data.json, make sure the file exist");
             return;
         }
@@ -52,8 +52,6 @@ public class Main{
             Log.error("Failed to build Bot" , e);
         }
 
-
-
         long timeTaken = System.currentTimeMillis() - startTimer;
         Log.info("Building Bot instance took "+timeTaken+"ms");
         jda.awaitReady();
@@ -77,14 +75,7 @@ public class Main{
                                 
                 Commands.slash("mod-ban-support" , "adds a mod to the support blacklist")
                         .addOption(OptionType.STRING , "mod-id" , "the mod to blacklist", true)
-                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MODERATE_MEMBERS)),
-
-
-                Commands.slash("ban","ban a bad guy")
-                        .addOption(OptionType.USER, "member", "who to ban", true)
-                        .addOption(OptionType.STRING, "reason", "why ban this guy", true)
-                        .addOption(OptionType.BOOLEAN, "appealable","should the ban be appealable", false)
-                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.BAN_MEMBERS))
+                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MODERATE_MEMBERS))
 
         ).queue(
                 success->Log.info("Loaded guild commands for guild "+guild.getName()+" successfully") ,
