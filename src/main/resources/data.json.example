@@ -1,22 +1,26 @@
 {
-     -- list of black listed mods --
-    "no_support_mods": [],
-
-    -- list of staff roles --
-    "staff_roles": [],
-
-    -- guild id, feel free to rename it and update on Load.java --
-    "mojo_id": "GUILD_ID",
-
-    -- logs channel id --
-    "log_channel": "CHANNEL_ID"
-
-    -- support forum channel id --
-    "support_forum": "CHANNEL_ID",
-
-    -- bot prefix, if left empty the default prefix is & --
-    "prefix" : "PREFIX",
-
-    -- bot token --
-    "token": <insert token here>
+    // List of blacklisted mc mods
+    "no_support_mods": [
+      
+    ],
+    // List of staff roles
+    "staff_roles": [
+       
+    ],
+    // Pre tester role
+    "pre_tester": ".",
+    // Verdict Channel ID
+    "verdict_id": ".",
+    // Bot owner ID
+    "owner_id": ".",
+    // Bot prefix
+    "prefix": "m!",
+    // Server/Guild ID
+    "mojo_id": ".",
+    // Support forum ID
+    "support_forum": ".",
+    // Logs channel ID
+    "log_channel": ".",
+    // Bot token
+    "token": "."
 }
