@@ -47,27 +47,38 @@
     </dependencies>
 
     <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.6.0</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <transformers>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <mainClass>net.amar.Main</mainClass>
+                            </transformer>
+                        </transformers>
+                        <finalName>MoJavaBot</finalName>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
 
-        <plugins>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>net.amar.Main</mainClass>
-                </configuration>
-            </plugin>
-
-        </plugins>
-
-    </build>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <configuration>
+                <mainClass>net.amar.Main</mainClass>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 
 </project>
