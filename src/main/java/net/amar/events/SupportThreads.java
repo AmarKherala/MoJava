@@ -87,80 +87,91 @@ public class SupportThreads extends ListenerAdapter{
         }
     }
 
-    private void parseLog(Message msg){
-        Message.Attachment log=msg.getAttachments().stream()
-                .findFirst().orElse(null);
+    private void parseLog(Message msg) {
+        // Find latestlog.txt specifically
+        Message.Attachment log = msg.getAttachments().stream()
+                .filter(a -> a.getFileName().equalsIgnoreCase("latestlog.txt"))
+                .findFirst()
+                .orElse(null);
 
-        if(log==null) return;
-
-        String logString= UrlRequestHandler.fetchMojoLog(log.getUrl());
-        if(logString==null){
-            msg.reply("Couldn't parse your log.").queue();
-            Log.warn("Failed to parse ["+log.getFileName()+"] from user ["+msg.getAuthor().getName()+"] in channel ["+msg.getChannel().getName()+"]");
+        if (log == null) {
+            // If they sent attachments but none were latestlog.txt, still warn them
+            if (!msg.getAttachments().isEmpty()) {
+                msg.replyEmbeds(notMojoLog().build()).queue();
+            }
             return;
         }
-        String[] logContent=logString.split("\n");
-        if(!(logString.contains("git.artdeell.mojo") || logString.contains("git.artdeell.mojo.debug"))){
+
+        String logString = UrlRequestHandler.fetchMojoLog(log.getUrl());
+        if (logString == null) {
+            msg.reply("Couldn't parse your log.").queue();
+            Log.warn("Failed to parse [latestlog.txt] from user [" + msg.getAuthor().getName() + "] in channel [" + msg.getChannel().getName() + "]");
+            return;
+        }
+
+        String[] logContent = logString.split("\n");
+
+        // Check if it's actually a Mojo log
+        if (!(logString.contains("git.artdeell.mojo") || logString.contains("git.artdeell.mojo.debug"))) {
             msg.replyEmbeds(notMojoLog().build()).queue();
             return;
         }
 
-
         // first loop through the mod list
         isSupported = true;
-        modListLoop(msg , logContent, logString);
+        modListLoop(msg, logContent, logString);
         if (!isSupported) return;
 
         // here begins the parsing process
-        String mojoVersion="";
-        String deviceModel="";
-        String deviceGPU="";
-        String mojoRenderer="";
-        String deviceArch="";
-        String ramAllocated="";
-        String mcVersion="";
-        String javaVersion="";
+        String mojoVersion = "";
+        String deviceModel = "";
+        String deviceGPU = "";
+        String mojoRenderer = "";
+        String deviceArch = "";
+        String ramAllocated = "";
+        String mcVersion = "";
+        String javaVersion = "";
 
-        for(String line : logContent){
-            if(line.startsWith("Info: Launcher version:"))
-                mojoVersion=line.substring("Info: Launcher version:".length()).trim();
-            if(line.startsWith("Info: Architecture:"))
-                deviceArch=line.substring("Info: Architecture:".length()).trim();
-            if(line.startsWith("Info: Device model:"))
-                deviceModel=line.substring("Info: Device model:".length()).trim();
-            if(line.startsWith("Info: Selected Minecraft version:"))
-                mcVersion=line.substring("Info: Selected Minecraft version:".length()).trim();
-            if(line.startsWith("Info: Graphics device:"))
-                deviceGPU=line.substring("Infl: Graphics device:".length()).trim();
-            if(line.startsWith("Info: RAM allocated:"))
-                ramAllocated=line.substring("Info: RAM allocated:".length()).trim();
-            if(line.startsWith("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo/runtimes/"))
-                javaVersion=line.substring("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo/runtimes/".length()).trim();
-            if(line.startsWith("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo.debug/runtimes/"))
-                javaVersion=line.substring("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo.debug/runtimes/".length()).trim();
-            if(line.startsWith("Added custom env: MOJO_RENDERER="))
-                mojoRenderer=line.substring("Added custom env: MOJO_RENDERER=".length()).trim();
+        for (String line : logContent) {
+            if (line.startsWith("Info: Launcher version:"))
+                mojoVersion = line.substring("Info: Launcher version:".length()).trim();
+            if (line.startsWith("Info: Architecture:"))
+                deviceArch = line.substring("Info: Architecture:".length()).trim();
+            if (line.startsWith("Info: Device model:"))
+                deviceModel = line.substring("Info: Device model:".length()).trim();
+            if (line.startsWith("Info: Selected Minecraft version:"))
+                mcVersion = line.substring("Info: Selected Minecraft version:".length()).trim();
+            if (line.startsWith("Info: Graphics device:"))
+                deviceGPU = line.substring("Info: Graphics device:".length()).trim();
+            if (line.startsWith("Info: RAM allocated:"))
+                ramAllocated = line.substring("Info: RAM allocated:".length()).trim();
+            if (line.startsWith("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo/runtimes/"))
+                javaVersion = line.substring("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo/runtimes/".length()).trim();
+            if (line.startsWith("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo.debug/runtimes/"))
+                javaVersion = line.substring("Added custom env: JAVA_HOME=/data/user/0/git.artdeell.mojo.debug/runtimes/".length()).trim();
+            if (line.startsWith("Added custom env: MOJO_RENDERER="))
+                mojoRenderer = line.substring("Added custom env: MOJO_RENDERER=".length()).trim();
         }
-        
+
         if (mojoVersion.isEmpty() || deviceModel.isEmpty()) {
-        EmbedBuilder em = new EmbedBuilder();
-        em.setTitle("Invalid log!");
-        em.setDescription("The log you provided doesn't include the launcher version or device model");
-        em.setColor(Color.cyan);
-        msg.replyEmbeds(em.build()).queue();
-        return;
+            EmbedBuilder em = new EmbedBuilder();
+            em.setTitle("Invalid log!");
+            em.setDescription("The log you provided doesn't include the launcher version or device model");
+            em.setColor(Color.cyan);
+            msg.replyEmbeds(em.build()).queue();
+            return;
         }
 
-        EmbedBuilder em=new EmbedBuilder();
+        EmbedBuilder em = new EmbedBuilder();
         em.setTitle("**Log information**");
-        em.setDescription("**Mojo version:**\n"+mojoVersion
-                +"\n**Device model:**\n"+deviceModel
-                +"\n**Device GPU:**\n"+deviceGPU
-                +"\n**Device architecture:**\n"+deviceArch
-                +"\n**Mojo renderer:**\n"+mojoRenderer
-                +"\n**Allocated RAM:**\n"+ramAllocated
-                +"\n**Java Runtime:**\n"+javaVersion
-                +"\n**Minecraft version:**\n"+mcVersion);
+        em.setDescription("**Mojo version:**\n" + mojoVersion
+                + "\n**Device model:**\n" + deviceModel
+                + "\n**Device GPU:**\n" + deviceGPU
+                + "\n**Device architecture:**\n" + deviceArch
+                + "\n**Mojo renderer:**\n" + mojoRenderer
+                + "\n**Allocated RAM:**\n" + ramAllocated
+                + "\n**Java Runtime:**\n" + javaVersion
+                + "\n**Minecraft version:**\n" + mcVersion);
         em.setColor(Color.CYAN);
         msg.replyEmbeds(em.build()).queue();
     }

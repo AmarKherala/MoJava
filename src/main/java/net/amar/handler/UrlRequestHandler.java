@@ -16,7 +16,7 @@ public class UrlRequestHandler {
       }
       return res.body().string();
     } catch (Exception e) {
-      Log.error("Failed to frtch log from url ["+url+"]", e);
+      Log.error("Failed to fetch log from url ["+url+"]", e);
       return null;
     }
   } 
