@@ -81,6 +81,10 @@ public class Load {
     public static String getPretesterRoleId() {
         return jsonObject!=null ? jsonObject.getString("pre_tester") : null;
     }
+
+    public static String getSupportBannedRoleId() {
+        return jsonObject!=null ? jsonObject.getString("support_banned") : null;
+    }
     /* Can't lazy load this one, it may get updated on runtime
      *via #BanModSupport.java or #BadModRemove.java */
     public static JSONArray getUnsupportedMods() {

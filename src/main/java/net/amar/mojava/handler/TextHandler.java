@@ -35,8 +35,13 @@ public class TextHandler extends ListenerAdapter {
 
   @Override
   public void onMessageReceived(MessageReceivedEvent event) {
-    
-    if (!event.getGuild().equals(Main.getJDA().getGuildById(Load.getGuildId()))) return;
+   /* to stop that annoying exception
+   "java.lang.IllegalStateException: This message event did not happen in a guild"
+    */
+    if (!event.isFromGuild()) return;
+
+
+    if ( event.getGuild().equals(Main.getJDA().getGuildById(Load.getGuildId()))) return;
 
     String rawMessage = event.getMessage().getContentRaw().toLowerCase();
 

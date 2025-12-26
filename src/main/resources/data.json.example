@@ -9,6 +9,8 @@
     ],
     // Pre tester role
     "pre_tester": ".",
+    //support banned role
+    "support_banned": ".",
     // Verdict Channel ID
     "verdict_id": ".",
     // Bot owner ID

@@ -11,6 +11,7 @@ import net.amar.mojava.commands.slash.staff.BanModSupport;
 import net.amar.mojava.commands.slash.SlashCommand;
 import net.amar.mojava.commands.slash.general.BotInfo;
 import net.amar.mojava.commands.slash.general.Help;
+import net.amar.mojava.commands.slash.staff.moderation.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +27,14 @@ public class SlashHandler extends ListenerAdapter {
     registerCommand(new BanModDisplay());
     registerCommand(new BanModRemove());
     registerCommand(new Verify());
+    registerCommand(new Ban());
+    registerCommand(new SupportBan());
+    registerCommand(new Unban());
+    registerCommand(new Mute());
+    registerCommand(new Kick());
+    registerCommand(new Warn());
+    registerCommand(new FindUserCases());
+    registerCommand(new FindCase());
   }
 
   private void registerCommand(SlashCommand cmd) {

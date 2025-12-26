@@ -31,7 +31,7 @@ public class MemberPunished extends ListenerAdapter{
         Message msg = event.getMessage();
 
         if (!msg.getEmbeds().isEmpty()) {
-            MessageEmbed em = msg.getEmbeds().getFirst();
+            MessageEmbed em = msg.getEmbeds().get(0);
             if (em.getTitle() != null) {
                 if (em.getTitle().startsWith("timeout | case") ||
                     em.getTitle().startsWith("warn | case") ||
